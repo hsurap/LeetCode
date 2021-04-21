@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int reverse(int x) {
+        bool y=0;        
+        int mx= pow(2,31)-1,mn=-1*pow(2,31);
+        if(x<0)
+        {
+             y=1;
+            if(x==mn)
+                return 0;
+            x=-x;
+        }
+        int ans=0;
+        while(x>0)
+        {
+            int rem=x%10;
+            if(ans>mx/10)
+                return 0;
+            ans=ans*10+rem;
+            x=x/10;
+        }
+        if(y==0)
+            return ans;
+        else
+            return -ans;
+    }
+};
