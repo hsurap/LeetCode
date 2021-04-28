@@ -1,0 +1,85 @@
+#include <stdio.h>
+
+
+
+
+int row,col;
+
+int main()  //main function
+{
+	scanf("%d %d",&row,&col);
+	getchar();
+	char arr[row][col];
+
+	for(int i = 0;i<row;i++)
+	{
+    	for(int j = 0;j<col;j++)
+	    {
+            scanf("%c",&arr[i][j]);
+        }
+			getchar();
+	}
+	// for(int i = 0;i<row;i++)
+	// {
+	// for(int j = 0;j<col;j++)
+ //    {
+ //        printf("%c",arr[i][j]);
+ //    }
+ //    printf("\n");
+	// }
+
+	int arrout[row][20];
+	int count = 0;
+	int counts=0,countd=0;
+	for(int i = 0;i<row;i++)
+	{
+		counts=0;
+		countd=0;
+		for(int j = 1;j<col;j++)
+		{
+			if(arr[i][j]==arr[i][j-1]&&arr[i][j]=='*')
+				{
+					counts++;
+					//printf("found * at %d,%d \n",i,j);
+				}
+			else if(arr[i][j]==arr[i][j-1]&&arr[i][j]=='-')
+				countd++;
+			if(arr[i][j]!=arr[i][j-1]&&arr[i][j-1]=='*')
+				{
+					arrout[i][count++] = counts+1;
+					counts=0;
+				}
+			if(arr[i][j]!=arr[i][j-1]&&arr[i][j-1]=='-')
+				{
+					arrout[i][count++] = countd+1;
+					countd=0;
+				}
+		}
+		if(arr[i][col-1]=='*')
+			{
+				arrout[i][count++]=counts+1;
+				arrout[i][count++] = 0 ;
+			}
+		else
+			arrout[i][count++]=countd+1;
+		arrout[i][count]=-1;
+		count = 0;
+	}
+	for(int i = 0;i<row;i++)
+	{
+		for(int j = 0;j<20;j++)
+		{
+			if(arrout[i][j]==-1)
+				{
+					printf("-1 \n");
+					break;
+				}
+			else
+			{
+				printf("%d ",arrout[i][j]);
+			}
+		}
+	}
+
+		
+}
