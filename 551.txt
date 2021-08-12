@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool checkRecord(string s) 
+    {
+        int size=s.size();
+        int a=0,l=0;
+        int i=0;
+        bool ans=true;
+        while(i<size)
+        {
+            if(s[i]=='A')
+                a++;
+            if(s[i]=='L')
+                l++;
+            if(s[i]!='L')
+            {
+                l=0;
+            }
+            if(a==2 || l>=3)
+            {
+                ans=false;
+                break;
+            }
+            i++;
+        }
+        return ans;
+    }
+};
