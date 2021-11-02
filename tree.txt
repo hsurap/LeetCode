@@ -1,0 +1,91 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+class binarytreenode{
+    public:
+    binarytreenode *left;
+    binarytreenode *right;
+    int data;
+    binarytreenode(int data)
+    {
+        this->data=data;
+        left=NULL;
+        right=NULL;
+    }
+    ~binarytreenode()
+    {
+        delete left;
+        delete right;
+    }
+};
+
+binarytreenode* takeInput()
+{
+    int rootData;
+    cout<<"enter root data"<<endl;
+    cin>>rootData;
+    
+    if(rootData==-1)
+    {
+        return NULL;
+    }
+    binarytreenode*root=new binarytreenode(rootData);
+    queue<binarytreenode*>q;
+    q.push(root);
+    while(q.size()!=0)
+    {
+        binarytreenode*front=q.front();
+        q.pop();
+        
+        int leftData;
+        cout<<"Enter Left child of "<<front->data<<endl;
+        cin>>leftData;
+        
+        if(leftData!=-1)
+        {
+            binarytreenode*leftchild=new binarytreenode(leftData);
+            front->left=leftchild;
+            q.push(leftchild);
+        }
+        
+        int rightData;
+        cout<<"Enter right child of "<<front->data<<endl;
+        cin>>rightData;
+        
+        if(rightData!=-1)
+        {
+            binarytreenode*rightchild=new binarytreenode(rightData);
+            front->right=rightchild;
+            q.push(rightchild);
+        }
+    }
+    return root;
+    
+}
+
+void print(binarytreenode*root)
+{
+    if(root==NULL)
+        return;
+    
+    queue<binarytreenode*> q;
+    q.push(root);
+    while(q.size()!=0)
+    {
+        binarytreenode*front=q.front();
+        q.pop();
+        cout<<front->data<<" ";
+        if(front->left!=NULL)
+            q.push(front->left);
+        if(front->right!=NULL)
+            q.push(front->right);
+    }
+    return ;
+}
+
+int main() {
+	binarytreenode *root=takeInput();
+	print(root);
+	return 0;
+}
