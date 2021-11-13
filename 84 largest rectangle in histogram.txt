@@ -1,0 +1,90 @@
+class Solution {
+public:
+    vector<int> prevsmaller(vector<int> a) 
+    {
+        stack<int> s;
+        vector<int> v;
+        for(int i=0;i<a.size();i++)
+        {
+            if(s.size()==0)
+            {
+                v.push_back(-1);
+                s.push(i);
+            }
+            else if(a[s.top()]<a[i])
+            {
+                v.push_back(s.top());
+                s.push(i);
+                
+            }
+            else{
+                while(s.size()!=0 &&  a[s.top()]>=a[i])
+                {
+                    s.pop();
+                }
+                if(s.size()==0)
+                    v.push_back(-1);
+                else
+                    v.push_back(s.top());
+                    
+                s.push(i);
+            }   
+        }
+        return v;
+    }
+    
+    
+    vector<int> nextsmaller(vector<int> a) 
+    {
+        stack<int> s;
+        vector<int> v;
+        for(int i=a.size()-1;i>=0;i--)
+        {
+            if(s.size()==0)
+            {
+                v.push_back(a.size());
+                s.push(i);
+            }
+            else if(a[s.top()]<a[i])
+            {
+                v.push_back(s.top());
+                s.push(i);
+                
+            }
+            else{
+                while(s.size()!=0 &&  a[s.top()]>=a[i])
+                {
+                    s.pop();
+                }
+                if(s.size()==0)
+                    v.push_back(a.size());
+                else
+                    v.push_back(s.top());
+                    
+                s.push(i);
+            }   
+        }
+        return v;
+    }
+    
+    int largestRectangleArea(vector<int>& a) 
+    {
+        int ans=0;
+        vector<int> ps=prevsmaller(a);
+        vector<int> ns=nextsmaller(a);
+        reverse(ns.begin(), ns.end());
+        
+        for(int i=0;i<ns.size();i++)
+        {
+            cout<<ns[i]<<" ";
+        }
+        
+        for(int i=0;i<a.size();i++)
+        {
+            int area=(ns[i]-ps[i]-1)*a[i];
+            ans=max(ans,area);
+                
+        }
+        return ans;
+    }
+};
