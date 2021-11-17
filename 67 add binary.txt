@@ -1,0 +1,67 @@
+class Solution {
+public:
+    string addBinary(string a, string b) 
+    {
+        if(a=="0")
+            return b;
+        if(b=="0")
+            return a;
+        int i=a.size()-1;
+        int j=b.size()-1;
+        int carry=0;
+        string ans="";
+        while(i>=0 && j>=0)
+        {
+            int n1=a[i]-'0';
+            int n2=b[j]-'0';
+            int sum=n1+n2+carry;
+            // cout<<sum<<" ";
+            if(sum%2==0)
+            {
+                ans='0'+ans;
+                carry=sum/2;
+            }
+            else{
+                ans='1'+ans;
+                carry=sum/2;
+            }
+            i--;
+            j--;
+        }
+        while(i>=0)
+        {
+            int n1=a[i]-'0';
+            int sum=n1+carry;
+            if(sum%2==0)
+            {
+                ans='0'+ans;
+                carry=sum/2;
+            }
+            else{
+                ans='1'+ans;
+                carry=sum/2;
+            }
+            i--;
+        }
+        while(j>=0)
+        {
+            int n2=b[j]-'0';
+            int sum=n2+carry;
+            if(sum%2==0)
+            {
+                ans='0'+ans;
+                carry=sum/2;
+            }
+            else{
+                ans='1'+ans;
+                carry=sum/2;
+            }
+            j--;
+        }
+        char ch=carry+'0';
+        //cout<<ch;
+        if(ch=='1')
+            ans=ch+ans;
+        return ans;
+    }
+};
