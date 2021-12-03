@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int minSteps(string s, string t) 
+    {
+        unordered_map<char,int>map1;
+        unordered_map<char,int>map2;
+        int ans=0;
+        for(int i=0;i<s.size();i++)
+        {
+            map1[s[i]]++;
+        }
+        for(int i=0;i<t.size();i++)
+        {
+            map2[t[i]]++;
+        }
+        for(int i=0;i<s.size();i++)
+        {
+            if(map1[s[i]]-map2[s[i]]>0)
+                ans+=(map1[s[i]]-map2[s[i]]);
+            map1[s[i]]=0;
+            map2[s[i]]=0;
+        }
+        return ans;
+    }
+};
