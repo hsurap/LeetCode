@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int evalRPN(vector<string>& a) 
+    {
+        int n=a.size();
+        int i=0;
+        stack<int>st;
+        while(i<n)
+        {
+            if(a[i]=="+" || a[i]=="-" || a[i]=="*" || a[i]=="/")
+            {
+                int no1=st.top();
+                st.pop();
+                int no2=st.top();
+                st.pop();
+                if(a[i]=="+")
+                    st.push(no2+no1);
+                if(a[i]=="-")
+                    st.push(no2-no1);
+                if(a[i]=="/")
+                    st.push(no2/no1);
+                if(a[i]=="*")
+                    st.push(no2*no1);
+            }
+            else{
+                int no=stoi(a[i]);
+                st.push(no);
+            }
+            i++;
+        }
+        return st.top();
+    }
+};
