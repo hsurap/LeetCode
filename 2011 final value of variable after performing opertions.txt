@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int finalValueAfterOperations(vector<string>& v) 
+    {
+        int ans=0;
+        for(int i=0;i<v.size();i++)
+        {
+            int j=0;
+            bool check=true;
+            string s=v[i];
+            while(j<s.size())
+            {
+                if(s[j]=='+')
+                    break;
+                if(s[j]=='-')
+                {
+                    check=false;
+                    break;
+                }
+                j++;
+            }
+            if(check==true)
+                ans++;
+            else
+                ans--;
+        }
+        return ans;
+    }
+    
+};
