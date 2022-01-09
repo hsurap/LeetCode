@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool isPowerOfFour(int n) 
+    {
+        if(n==1)
+            return true;
+        int count=0,c1=0;
+        while(n>0)
+        {
+            int ans = n&1;
+            if(ans==0)
+                c1++;
+            else
+                count++;
+            n=n>>1;
+        }
+        if(c1%2==0 && count==1)
+            return true;
+        else 
+            return false;
+        
+    }
+};
