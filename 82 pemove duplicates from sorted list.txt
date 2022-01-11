@@ -1,0 +1,73 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) 
+    {
+        if(head==NULL || head->next==NULL)
+            return head;
+        ListNode*a=head;
+        ListNode*b=head->next;
+        while(head!=NULL && head->next!=NULL && head->val==head->next->val)
+        {
+            if(a->val==b->val)
+            {
+                while(b!=NULL && a->val==b->val)
+                {
+                    ListNode*temp=a;
+                    a=b;
+                    b=b->next;
+                    delete temp;
+                }
+            }
+            if(b==NULL)
+                return NULL;
+            else{
+                delete a;
+                head=b;
+                a=b;
+                b=b->next;
+            }
+        }
+        //cout<<a->val<<" "<<b->val<<endl;
+        // return head;
+        ListNode*prev=NULL;
+        while(b!=NULL)
+        {
+            if(a->val!=b->val)
+            {
+                prev=a;
+                a=b;
+                b=b->next;
+            }
+            else if(a->val==b->val)
+            {
+                while(b!=NULL && b->val==a->val)
+                {
+                    b=b->next;
+                }
+                while(a!=NULL && a!=b)
+                {
+                    ListNode*temp=a;
+                    a=a->next;
+                    delete temp;
+                }
+                prev->next=a;
+                if(a==NULL)
+                    return head;
+                else
+                    b=a->next;
+            }
+        }
+        return head;
+    }
+    
+};
