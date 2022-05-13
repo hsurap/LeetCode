@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int removeDuplicates(vector<int>& a) 
+    {
+        if(a.size()==0 || a.size()==1)
+            return a.size();
+        int st=0,en=1;
+        while(en<a.size())
+        {
+            if(a[en]==a[st])
+                en++;
+            else{
+                st++;
+                a[st]=a[en];
+            }
+        }
+        return st+1;
+    }
+};
