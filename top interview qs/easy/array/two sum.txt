@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& a, int t) 
+    {
+        unordered_map<int,int>map;
+        vector<int>ans;
+        for(int i=0;i<a.size();i++)
+        {
+            if(map.count(t-a[i]))
+            {
+                ans.push_back(map[t-a[i]]);
+                ans.push_back(i);
+                break;
+            }
+            else{
+                map[a[i]]=i;
+            }
+        }
+        return ans;
+        
+    }
+};
