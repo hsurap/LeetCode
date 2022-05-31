@@ -1,0 +1,23 @@
+class Solution {
+public:
+    void rotate(vector<vector<int>>& a) 
+    {
+        int row=a.size();
+        int col=a[0].size();
+        for(int i=0;i<row;i++)
+        {
+            for(int j=i;j<col;j++)
+            {
+                swap(a[i][j],a[j][i]);
+            }
+        }
+        int time=col/2;
+        for(int k=0;k<time;k++)
+        {
+            for(int r=0;r<row;r++)
+            {
+                    swap(a[r][k],a[r][col-1-k]);
+            }
+        }
+    }
+};
