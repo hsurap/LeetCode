@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool isOneBitCharacter(vector<int>& a)
+    {
+        
+        int size=a.size();
+        int i=0;
+        bool ans=false;
+        while(i<size)
+        {
+            if(a[i]==1)
+            {
+                i+=2;
+                ans=false;
+            }
+            else{
+                i++;
+                ans=true;
+            }
+                
+        }
+        return ans;
+        
+    }
+};
