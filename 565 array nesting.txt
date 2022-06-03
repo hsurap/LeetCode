@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int arrayNesting(vector<int>& nums) {
+        long long int size=nums.size();
+        vector<bool> check(size);
+        long long int maxx=0;
+        for(long long int x=0;x<size;x++)
+        {
+            for(long long int i=0;i<size;i++)
+                check[i]=0;
+            long long int count=0,index=x;
+            while(check[index]==0)
+            {
+                count++;
+                check[index]=1;
+                index=nums[index];
+            }
+            if(maxx<count)
+                maxx=count;
+        }
+        return maxx;
+    }
+};
