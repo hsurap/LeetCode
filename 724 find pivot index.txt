@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int pivotIndex(vector<int>& a) {
+        vector<int>left(a.size(),0);
+        for(int i=1;i<a.size();i++)
+        {
+            left[i]=left[i-1]+a[i-1];
+        }
+        vector<int>right(a.size(),0);
+        for(int i=a.size()-2;i>=0;i--)
+        {
+            right[i]=right[i+1]+a[i+1];
+        }
+        for(int i=0;i<a.size();i++)
+        {
+            if(left[i]==right[i])
+                return i;
+        }
+        return -1;
+    }
+        
+};
