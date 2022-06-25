@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string countAndSay(int n) 
+    {
+        if(n==1)return "1";
+        string sa=countAndSay(n-1);
+        int i=0,count=1;
+        string ans="";
+        for(int i=0;i<sa.size()-1;i++)
+        {
+            if(sa[i]==sa[i+1])
+                count++;
+            else{
+                char ch=count+'0';
+                ans=ans+ch+sa[i];
+                count=1;
+            }
+        }
+        char chh=count+'0';
+        ans=ans+ (chh) +(sa[sa.size()-1]);
+        return ans;
+    }
+};
