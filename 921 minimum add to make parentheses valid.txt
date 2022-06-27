@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int minAddToMakeValid(string s) {
+        stack<char>st;
+        int i=0;
+        int ans=0;
+        while(i<s.size())
+        {
+            if(s[i]=='(')st.push('(');
+            else if(s[i]=')')
+            {
+                if(st.size()==0)
+                    ans++;
+                else
+                    st.pop();
+            }
+            i++;
+        }
+        return ans+st.size();
+    }
+};
