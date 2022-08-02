@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int count(vector<vector<int>>& matrix, int k)
+    {
+        int i=matrix.size()-1;
+        int j=0;
+        int ans=0;
+        while(i>=0 && j<matrix[0].size())
+        {
+            if(matrix[i][j]<=k)
+            {
+                ans+=(i+1);
+                j++;
+            }
+            else
+                i--;
+        }
+        return ans;
+    }
+    
+    int kthSmallest(vector<vector<int>>& matrix, int k) 
+    {
+        int st=matrix[0][0];
+        int en=matrix[matrix.size()-1][matrix[0].size()-1];
+        int ans=0;
+        while(st<=en)
+        {
+            int md=st+(en-st)/2;
+            int cnt=count(matrix,md);
+            if(cnt<k)
+            {
+                st=md+1;
+            }
+            else{
+                ans=md;
+                en=md-1;
+            }
+                
+        }
+        return ans;
+    }
+}; 
