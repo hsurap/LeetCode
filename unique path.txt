@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int func(int row ,int col,vector<vector<int>>&dp)
+    {
+        if(row==0 && col==0)return 1;
+        if(row<0 || col<0)return 0;
+        if(dp[row][col]!=-1)return dp[row][col];
+        int w1=func(row-1,col,dp);
+        int w2=func(row,col-1,dp);
+        return dp[row][col]= w1+w2;
+    }
+    int uniquePaths(int m, int n) {
+        vector<vector<int>>dp(m,vector<int>(n,0));
+        for(int i=0;i<m;i++)
+            dp[i][0]=1;
+        for(int i=0;i<n;i++)
+            dp[0][i]=1;
+        for(int i=1;i<m;i++)
+        {
+            for(int j=1;j<n;j++)
+            {
+                int w1=dp[i-1][j];
+                int w2=dp[i][j-1];
+                dp[i][j]=w1+w2;
+            }
+        }
+        return dp[m-1][n-1];
+    }
+};
