@@ -1,0 +1,36 @@
+class Solution{
+    public:
+    double MedianOfArrays(vector<int>& v1, vector<int>& v2)
+    {
+       if(v1.size()>v2.size())
+        return MedianOfArrays(v2,v1);
+       
+       int st=0,en=v1.size();
+       while(st<=en)
+       {
+           int md=(st+en+1)/2;
+           int c1=md;
+           int c2=((v1.size()+v2.size()+1)/2)-c1;
+           
+           int l1=INT_MIN,l2=INT_MIN,r1=INT_MAX,r2=INT_MAX;
+           if(c1!=0)l1=v1[c1-1];
+           if(c2!=0)l2=v2[c2-1];
+           if(c1!=v1.size())r1=v1[c1];
+           if(c2!=v2.size())r2=v2[c2];
+           
+           if(l1<=r2 && l2<=r1)
+           {
+               if((v1.size()+v2.size())%2==0)
+               {
+                   return (max(l1,l2)+min(r1,r2))/2.0;
+               }
+               return max(l1,l2)*1.0;
+           }
+           else if(l1>r2)
+               en=md-1;
+           else
+            st=md+1;
+           
+       }
+    }
+};
