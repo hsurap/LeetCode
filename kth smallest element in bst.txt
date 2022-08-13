@@ -1,0 +1,17 @@
+class Solution {
+  public:
+    // Return the Kth smallest element in the given BST
+    int count(Node *root)
+    {
+        if(root==NULL)return 0;
+        return 1+ count(root->left) + count(root->right);
+    }
+    int KthSmallestElement(Node *root, int k) {
+        int total=count(root);
+        if(k>total)return -1;
+        int lc=count(root->left);
+        if(k==lc+1)return root->data;
+        else if (lc>=k)return KthSmallestElement(root->left,k);
+        else return KthSmallestElement(root->right,k-lc-1);
+    }
+};
