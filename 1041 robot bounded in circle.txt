@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool isRobotBounded(string s) {
+        int x=0,y=0;
+        int dx=0,dy=1;
+        int i=0;
+        while(i<s.size())
+        {
+            if(s[i]=='G')
+            {
+                x+=dx;
+                y+=dy;
+            }
+            else if(s[i]=='L')
+            {
+                int temp=dx;
+                dx=-dy;
+                dy=temp;
+            }
+            else{
+                int temp=dx;
+                dx=dy;
+                dy=-temp;
+            }
+            i++;
+        }
+        
+        if(x==0&&y==0)
+            return true;
+        if(dx!=0 || dy!=1)
+            return true;
+        else
+            return false;
+            
+    }
+};
