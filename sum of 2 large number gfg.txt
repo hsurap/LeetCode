@@ -1,0 +1,53 @@
+class Solution {
+  public:
+    string findSum(string x, string y) {
+        string ans="";
+        int i=x.size()-1;
+        int j=y.size()-1;
+        int c=0;
+        while(j>=0 && i>=0)
+        {
+            int n1=x[i]-'0';
+            int n2=y[j]-'0';
+            int no=n1+n2+c;
+            c=no/10;
+            char ch=no%10 + '0';
+            ans=ch+ans;
+            i--;
+            j--;
+        }
+        while(i>=0)
+        {
+            int n1=x[i]-'0';
+            int no=n1+c;
+            c=no/10;
+            char ch=no%10 + '0';
+            ans=ch+ans;
+            i--;
+        }
+        while(j>=0)
+        {
+            int n2=y[j]-'0';
+            int no=n2+c;
+            c=no/10;
+            char ch=no%10 + '0';
+            ans=ch+ans;
+            j--;
+        }
+        if(c!=0)
+        {
+            char ch=c+'0';
+            ans=ch+ans;
+        }
+        // return ans;
+        int p=0;
+        while(p<ans.size())
+        {
+            if(ans[p]!='0')break;
+            p++;
+        }
+        if(p==0)return ans;
+        if(p==ans.size())return "0";
+        return ans.substr(p);
+    }
+};
