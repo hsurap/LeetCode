@@ -1,0 +1,65 @@
+class Solution {
+public:
+    bool place(string stamp, string &target,int i)
+    {
+        int k=0;
+        for(int j=i;j<i+stamp.size();j++)
+        {
+            if( stamp[k]!=target[j] && target[j]!='?')
+                return false;
+            k++;
+        }
+        return true;
+    }
+    int replace(string stamp, string &target,int i)
+    {
+        int count=0;
+        for(int j=i;j<i+stamp.size();j++)
+        {
+            if(target[j]!='?')
+            {
+                count++;
+                target[j]='?';
+            }
+        }
+        return count;
+    }
+    vector<int> movesToStamp(string stamp, string target) 
+    {
+        stack<int>st;
+        vector<int>ans;
+        int count=0;
+        int n=target.size();
+        int m=stamp.size();
+        vector<int>vis(n,0);
+        while(count!=n)
+        {
+            bool chk=false;
+            
+            for(int i=0;i<=n-m;i++)
+            {
+                if(vis[i]==0 && place(stamp,target,i))
+                {
+                    // cout<<"helo"<<i<<endl;
+                    count+=replace(stamp,target,i);
+                    vis[i]=1;
+                    chk=true;
+                    st.push(i);
+                    if(count==n)break;
+                    // cout<<target<<" ";
+                }
+                
+            }
+            if(chk==false)
+                break;
+        }
+        
+        if(count!=n)return ans;
+        while(st.size()!=0)
+        {
+            ans.push_back(st.top());
+            st.pop();
+        }
+        return ans;
+    }
+};
