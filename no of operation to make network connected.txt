@@ -1,0 +1,41 @@
+class Solution {
+public:
+    void dfs(int st,unordered_map<int,vector<int>>&adjlist,vector<int>&vis)
+    {
+        vis[st]=1;
+        for(auto i:adjlist[st])
+        {
+            if(!vis[i])
+                dfs(i,adjlist,vis);
+        }
+        return ;
+        
+    }
+    int makeConnected(int n, vector<vector<int>>& a) 
+    {
+        unordered_map<int,vector<int>>adjlist;
+        int count=0;
+        for(int i=0;i<a.size();i++)
+        {
+            adjlist[a[i][0]].push_back(a[i][1]);
+            adjlist[a[i][1]].push_back(a[i][0]);
+            count++;
+        }
+        vector<int>vis(n,0);
+        if(count<n-1)return -1;
+        int comp=0;
+        for(int i=0;i<n;i++)
+        {
+            if(vis[i]==0)
+            {
+                dfs(i,adjlist,vis);
+                comp++; 
+            }     
+        }
+        int red=count-((n-1)-(comp-1));
+        if(red>=(comp-1))return comp-1;
+        else
+            return -1;
+        
+    }
+};
