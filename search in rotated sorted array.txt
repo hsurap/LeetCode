@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int search(vector<int>& a, int k) 
+    {
+        int st=0;
+        int en=a.size()-1;
+        while(st<=en)
+        {
+            int md=(st+en)/2;
+            if(a[md]==k)return md;
+            if(a[md]>=a[0])
+            {
+                if(k>=a[st] && k<=a[md])
+                    en=md-1;
+                else
+                    st=md+1;
+            }
+            else{
+                if(k>=a[md] && k<=a[en])
+                    st=md+1;
+                else
+                    en=md-1;
+            }
+        }
+        return -1;
+    }
+};
