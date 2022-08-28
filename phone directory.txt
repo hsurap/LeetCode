@@ -1,0 +1,122 @@
+class trienode{
+    public:
+    char data;
+    trienode**children;
+    bool terminal;
+    trienode(char data)
+    {
+        this->data=data;
+        children=new trienode*[26];
+        for(int i=0;i<26;i++)
+        {
+            children[i]=NULL;
+        }
+        terminal=false;
+    }
+};
+
+
+class trie{
+    trienode* root;
+    public:
+    void insert(trienode*root,string word)
+    {
+        if(word.size()==0)
+        {
+            root->terminal=true;
+            return;
+        }
+        int i=word[0]-'a';
+        trienode*child;
+        if(root->children[i]!=NULL)
+        {
+            child=root->children[i];
+        }
+        else{
+            child=new trienode(word[0]);
+            root->children[i]=child;
+        }
+        insert(child,word.substr(1));
+    }
+
+    void print(trienode*root,string word,vector<string>&v)
+    {
+        if(root->terminal==true)
+        {
+            v.push_back(word);
+        }
+        for(int i=0;i<26;i++)
+        {
+            if(root->children[i]!=NULL)
+            {
+                print(root->children[i],word+root->children[i]->data,v);
+            }
+        }
+        return;
+    }
+    void complete(trienode*root,string word,string sword,vector<string>&v)
+    {
+        if(word.size()==0)
+        {
+            print(root,sword,v);
+            return;
+        }
+        int i=word[0]-'a';
+        trienode*child;
+        if(root->children[i]!=NULL)
+        {
+            child=root->children[i];
+        }
+        else{
+            return ;
+        }
+        complete(child,word.substr(1),sword,v);
+        return;
+    }
+    trie()
+    {
+        root=new trienode('\0');
+    }
+    void insertData(string word)
+    {
+        insert(root,word);
+    }
+
+    void auto_complete(string word,vector<string>&v)
+    {
+        complete(root,word,word,v);
+    }
+};
+
+
+class Solution{
+public:
+    vector<vector<string>> displayContacts(int n, string contact[], string s)
+    {
+        vector<vector<string>>bv;
+        vector<string>v;
+        trie t;
+        for(int i=0;i<n;i++)
+        {
+            string s1=contact[i];
+            t.insertData(s1);
+        }
+        string st="";
+        for(int i=0;i<s.size();i++)
+        {
+            vector<string>v;
+            st=st+s[i];
+            t.auto_complete(st,v);
+            if(v.size()!=0)
+                bv.push_back(v);
+            else
+                {
+                    v.push_back("0");
+                    bv.push_back(v);
+                }
+            
+        }
+        return bv;
+        
+    }
+};
