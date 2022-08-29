@@ -1,0 +1,122 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+class trienode{
+    public:
+    char data;
+    trienode**children;
+    bool terminal;
+    trienode(char data)
+    {
+        this->data=data;
+        children=new trienode*[26];
+        for(int i=0;i<26;i++)
+        {
+            children[i]=NULL;
+        }
+        terminal=false;
+    }
+};
+
+class trie{
+    trienode* root;
+    public:
+    void insert(trienode*root,string word)
+    {
+        if(word.size()==0)
+        {
+            root->terminal=true;
+            return;
+        }
+        int i=word[0]-'a';
+        trienode*child;
+        if(root->children[i]!=NULL)
+        {
+            child=root->children[i];
+        }
+        else{
+            child=new trienode(word[0]);
+            root->children[i]=child;
+        }
+        insert(child,word.substr(1));
+    }
+    bool search(trienode*root,string word)
+    {
+        if(word.size()==0)
+        {
+            if(root->terminal==true)
+                return true;
+            else
+                return false;
+        }
+        int i=word[0]-'a';
+        trienode*child;
+        if(root->children[i]!=NULL)
+        {
+            child=root->children[i];
+        }
+        else{
+            return false;
+        }
+        return search(child,word.substr(1));
+    }
+    void remove(trienode*root,string word)
+    {
+        if(word.size()==0)
+        {
+            root->terminal=false;
+            return;
+        }
+        int i=word[0]-'a';
+        trienode*child;
+        if(root->children[i]!=NULL)
+        {
+            child=root->children[i];
+        }
+        else{
+            return;
+        }
+        remove(child,word.substr(1));
+        if(root->terminal==false)
+        {
+            for(int i=0;i<26;i++)
+            {
+                if(child->children[i]!=NULL)
+                    return ;
+            }
+            delete child;
+            root->children[i]=NULL;
+            return;
+        }
+    }
+    trie()
+    {
+        root=new trienode(NULL);
+    }
+    void insertData(string word)
+    {
+        insert(root,word);
+    }
+    bool searchData(string word)
+    {
+        return search(root,word);
+    }
+    void removeData(string word)
+    {
+        remove(root,word);
+    }
+};
+
+
+int main() {
+	trie t;
+	t.insertData("parush");
+	t.insertData("garg");
+	cout<<t.searchData("garg")<<" ";
+	cout<<t.searchData("parush")<<" ";
+	t.removeData("garg");
+	cout<<t.searchData("garg")<<" ";
+	cout<<t.searchData("parush")<<" ";
+	return 0;
+}
