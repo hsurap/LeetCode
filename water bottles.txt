@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int numWaterBottles(int n, int a) 
+    {
+        int ans=0;
+        while(n>=a)
+        {
+            int q=n/a;
+            int r=n%a;
+            ans+=(a*q);
+            n=q+r;
+        }
+        ans+=n;
+        return ans;
+    }
+};
