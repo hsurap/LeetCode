@@ -1,0 +1,43 @@
+class Solution {
+public:
+    static bool cmp(vector<int>v1,vector<int>v2)
+    {
+        return v1[0]<v2[0];
+    }
+    vector<vector<int>> mergeSimilarItems(vector<vector<int>>& a1, vector<vector<int>>& a2) 
+    {
+        vector<vector<int>>ans;
+        sort(a1.begin(),a1.end(),cmp);
+        sort(a2.begin(),a2.end(),cmp);
+        int i=0,j=0;
+        while(i<a1.size() && j<a2.size())
+        {
+            if(a1[i][0]==a2[j][0])
+            {
+                ans.push_back({a1[i][0],a1[i][1]+a2[j][1]});
+                i++;
+                j++;
+            }
+            else if(a1[i][0]<a2[j][0])
+            {
+                ans.push_back({a1[i][0],a1[i][1]});
+                i++;
+            }
+            else{
+                ans.push_back({a2[j][0],a2[j][1]});
+                j++;
+            }
+        }
+        while(i<a1.size())
+        {
+            ans.push_back({a1[i][0],a1[i][1]});
+            i++;
+        }
+        while(j<a2.size())
+        {
+            ans.push_back({a2[j][0],a2[j][1]});
+            j++;
+        }
+        return ans;
+    }
+};
