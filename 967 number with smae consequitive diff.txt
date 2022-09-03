@@ -1,0 +1,29 @@
+class Solution {
+public:
+    void func(int n,int cd,int cn,int k,vector<int>&ans)
+    {
+        if(n<0)return;
+        if(n==0){
+            ans.push_back(cn);
+            return;
+        }
+        if(k==0)
+        {
+            func(n-1,cd-k,cn*10+cd-k,k,ans);
+            return ;
+        }
+        if(cd-k>=0)
+            func(n-1,cd-k,cn*10+cd-k,k,ans);
+        if(cd+k<=9)
+            func(n-1,cd+k,cn*10+cd+k,k,ans);
+        return ;
+    }
+    vector<int> numsSameConsecDiff(int n, int k) {
+        vector<int>ans;
+        for(int i=1;i<=9;i++)
+        {
+            func(n-1,i,i,k,ans);
+        }
+        return ans;
+    }
+};
