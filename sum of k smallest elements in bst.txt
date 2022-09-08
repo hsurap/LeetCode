@@ -1,0 +1,22 @@
+void func(Node* root, int &k,int &s)
+{
+    if(root==NULL)return;
+    if(k==0)return;
+    func(root->left,k,s);
+    if(k>0)
+    {
+        s+=root->data;
+        k=k-1;
+    }
+    func(root->right,k,s);
+    
+}
+int sum(Node* root, int k) 
+{ 
+  
+    int s=0;
+    func(root,k,s);
+    return s;
+    
+    
+} 
