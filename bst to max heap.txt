@@ -1,0 +1,26 @@
+class Solution{
+  public:
+    void func1(Node*root,vector<int>&a)
+    {
+        if(root==NULL)return ;
+        func1(root->left,a);
+        a.push_back(root->data);
+        func1(root->right,a);
+    }
+    void func2(Node*root,vector<int>&a,int &i)
+    {
+        if(root==NULL)return;
+        root->data=a[i];
+        i--;
+        func2(root->right,a,i);
+        func2(root->left,a,i);
+    }
+    void convertToMaxHeapUtil(Node* root)
+    {
+        vector<int>a;
+        func1(root,a);
+        int n=a.size()-1;
+        func2(root,a,n);
+        // return root;
+    }    
+};
