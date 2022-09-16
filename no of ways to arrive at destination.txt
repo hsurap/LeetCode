@@ -1,0 +1,44 @@
+class Solution {
+  public:
+    int mod=1000000007;
+    void bfs(int st,vector<int>&vis,unordered_map<int,vector<pair<int,int>>>&adjlist,int dist,int&min_dist,int&min_dis_cnt,int n)
+    {
+        if(st==n-1)
+        {
+            if(dist<min_dist)
+            {
+                min_dist=dist;
+                min_dis_cnt=1;
+            }
+            else if(dist==min_dist)
+            {
+                min_dis_cnt=(min_dis_cnt+1)%mod;
+            }
+            return;
+        }
+        if(dist>min_dist)return;
+        vis[st]=1;
+        for(auto i:adjlist[st])
+        {
+            if(vis[i.first]==0)
+            {
+                bfs(i.first,vis,adjlist,dist+i.second,min_dist,min_dis_cnt,n);
+            }
+        }
+        vis[st]=0;
+        return ;
+    }
+    int countPaths(int n, vector<vector<int>>& a) {
+        int min_dist=INT_MAX;
+        int min_dis_cnt=0;
+        unordered_map<int,vector<pair<int,int>>>adjlist;
+        for(auto i:a)
+        {
+            adjlist[i[0]].push_back({i[1],i[2]});
+            adjlist[i[1]].push_back({i[0],i[2]});
+        }
+        vector<int>vis(n,0);
+        bfs(0,vis,adjlist,0,min_dist,min_dis_cnt,n);
+        return min_dis_cnt;
+    }
+};
