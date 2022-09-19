@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int dates[13]={0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    int func(int m,int d)
+    {
+        int count=0;
+        for(int i=0;i<m;i++)
+        {
+            count+=dates[i];
+        }
+        count+=d;
+        return count;
+    }
+    int countDaysTogether(string aa, string al, string ba, string bl) 
+    {
+        int aam=(aa[0]-'0')*10+(aa[1]-'0');
+        int bam=(ba[0]-'0')*10+(ba[1]-'0');
+        int aad=(aa[3]-'0')*10+(aa[4]-'0');
+        int bad=(ba[3]-'0')*10+(ba[4]-'0');
+        
+        int alm=(al[0]-'0')*10+(al[1]-'0');
+        int blm=(bl[0]-'0')*10+(bl[1]-'0');
+        int ald=(al[3]-'0')*10+(al[4]-'0');
+        int bld=(bl[3]-'0')*10+(bl[4]-'0');
+        
+        int mx=max(func(aam,aad),func(bam,bad));
+        int mn=min(func(alm,ald),func(blm,bld));
+        if(mx>mn)return 0;
+        return mn-mx+1;
+        
+    }
+};
