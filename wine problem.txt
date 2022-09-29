@@ -1,0 +1,94 @@
+#include <iostream>
+using namespace std;
+
+//methord 1
+int maxprofit(int arr[],int st,int en,int year)
+{
+    if(st>en)
+        return 0;
+    int q1=year*arr[st]+maxprofit(arr,st+1,en,year+1);
+    int q2=year*arr[en]+maxprofit(arr,st,en-1,year+1);
+    return max(q1,q2);
+}
+
+
+//methord2
+
+int memo[100][100];
+
+int maxprofit2(int arr[],int st,int en,int year)
+{
+    if(st>en)
+        return 0;
+    if(memo[st][en]!=-1)
+        return memo[st][en];
+    
+    int q1=year*arr[st]+maxprofit(arr,st+1,en,year+1);
+    int q2=year*arr[en]+maxprofit(arr,st,en-1,year+1);
+    
+    memo[st][en]=max(q1,q2);
+    return memo[st][en];
+}
+
+//methord3
+
+int maxprofit3(int arr[],int n)
+{
+    int dp[100][100]={0};
+    int year=n;
+    for(int i=0;i<n;i++)
+    {
+        dp[i][i]=arr[i]*year;
+    }
+    year--;
+    for(int len=2;len<=n;len++)
+    {
+        int time=n-len;
+        for(int i=0;i<=time;i++)
+        {
+            int y=i;
+            int x=len-1+i;
+            dp[y][x]=max( (dp[y][x-1]+year*arr[x]) , (dp[y+1][x]+arr[y]*year));
+        }
+        year--;
+    }
+    
+    // for(int i=0;i<n;i++)
+    // {
+    //     for(int j=0;j<n;j++)
+    //     {
+    //         cout<<dp[i][j]<<" ";
+    //     }
+    //     cout<<endl;
+    // }
+    return dp[0][n-1];
+}
+
+
+int main() {
+	int n;
+	cin>>n;
+	int arr[n];
+	for(int i=0;i<n;i++)
+	{
+	    cin>>arr[i];
+	}
+// 	int ans=maxprofit(arr,0,n-1,1);
+// 	cout<<ans<<endl;
+	
+// 	for(int i=0;i<100;i++)
+// 	{
+// 	    for(int j=0;j<100;j++)
+// 	    {
+// 	        memo[i][j]=-1;
+// 	    }
+// 	}
+
+// 	int ans=maxprofit2(arr,0,n-1,1);
+// 	cout<<ans<<endl;
+
+    int ans=maxprofit3(arr,n);
+    cout<<ans<<endl;
+	
+	return 0;
+}
