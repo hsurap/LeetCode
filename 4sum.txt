@@ -1,0 +1,45 @@
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& a, int target) 
+    {
+        int n=a.size();
+        sort(a.begin(),a.end());
+        vector<vector<int>>ans;
+        for(int i=0;i<=n-4;i++)
+        {
+            if(i!=0 && a[i]==a[i-1])continue;
+            int j=i+1;
+            for(;j<n-2;j++)
+            {
+                if(j!=i+1 && a[j]==a[j-1])continue;
+                int st=j+1;
+                int en=n-1;
+                long long int rs=target-a[i];
+                rs-=a[j];
+                // cout<<st<<" "<<en<<" "<<rs<<" "<<endl;
+                while(st<en)
+                {
+                    if(a[st]+a[en]==rs)
+                    {
+                        ans.push_back({a[i],a[j],a[st],a[en]});
+                        while(st<en)
+                        {
+                            st++;
+                            if(a[st]!=a[st-1])break;
+                        }
+                        while(st<en)
+                        {
+                            en--;
+                            if(a[en]!=a[en+1])break;
+                        }
+                    }
+                    else if(a[st]+a[en]<rs)
+                        st++;
+                    else
+                        en--;
+                }
+            }
+        }
+        return ans;
+    }
+};
