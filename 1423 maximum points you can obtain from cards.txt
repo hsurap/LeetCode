@@ -1,0 +1,29 @@
+class Solution 
+{
+public:
+    int maxScore(vector<int>& v, int k) 
+    {
+        int n=v.size()-k;
+        int sum=0,min=0;
+        for(int i=0;i<n;i++)
+        {
+            sum+=v[i];
+        }
+        min=sum;
+        int s=0,e=n-1;
+        while(e<v.size()-1)
+        {
+            sum=sum+v[e+1]-v[s];
+            if(sum<min)
+                min=sum;
+            e++;
+            s++;
+        }
+        int ans=0;
+        for(int i=0;i<v.size();i++)
+        {
+            ans+=v[i];
+        }
+        return ans-min;
+    }
+};
