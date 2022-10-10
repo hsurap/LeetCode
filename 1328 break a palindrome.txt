@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string breakPalindrome(string s) 
+    {
+        if(s.size()==1)return "";
+        int i=0;
+        while(i<s.size()/2)
+        {
+            int j=s.size()-1-i;
+            if(s[i]!='a')
+            {
+                s[i]='a';
+                return s;
+            }
+            else if(j==i)
+            {
+                s[s.size()-1]=s[s.size()-1]+1;
+                return s;
+            }
+            i++;
+        }
+        s[s.size()-1]=s[s.size()-1]+1;
+        return s;
+    }
+};
