@@ -1,0 +1,14 @@
+class Solution {
+public:
+    char repeatedCharacter(string s) 
+    {
+        int freq[26]={0};
+        for(auto i:s)
+        {
+            if(freq[i-'a']>0)
+                return i;
+            freq[i-'a']++;
+        }
+        return -1;
+    }
+};
