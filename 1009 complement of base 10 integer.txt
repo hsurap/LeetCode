@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int bitwiseComplement(int n) 
+    {
+        if(n==0)
+            return 1;
+        int no=n;
+        int count=0;
+        while(no>0)
+        {
+            no=(no>>1);
+            count++;
+        }
+        int base=(1<<(count));
+        int newbase=base-1;
+        return newbase^n;
+    }
+};
