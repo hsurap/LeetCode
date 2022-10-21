@@ -1,0 +1,16 @@
+class Solution {
+public:
+    bool validMountainArray(vector<int>& arr)
+    {
+        int n = arr.size(), i = 1;
+    if ((n < 3)|| (arr[0] >= arr[1]) || (arr[n - 2] <= arr[n - 1]) )
+        return false;
+    while (arr[i] < arr[i + 1])
+        i++;
+    while ((i + 1 < n)&&(arr[i] > arr[i + 1])  )
+        i++;
+    if (i == n - 1)
+        return true;
+    return false;
+    }
+};
