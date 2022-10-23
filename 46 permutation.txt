@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void func(vector<int>& nums,vector<vector<int>>&ans,vector<int>&sans,int i,int n)
+    {
+        if(i==n)
+        {
+            ans.push_back(sans);
+            return ;
+        }
+        for(int j=0;j<sans.size();j++)
+        {
+            if(sans[j]==-20)
+            {
+                sans[j]=nums[i];
+                func(nums,ans,sans,i+1,n);
+                sans[j]=-20;
+            }
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        int n=nums.size();
+        vector<vector<int>>ans;
+        vector<int>sans(n,-20);
+        func(nums,ans,sans,0,n);
+        return ans;
+    }
+};
