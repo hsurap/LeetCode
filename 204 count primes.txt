@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int countPrimes(int r)
+    {
+        vector<bool>v(r+1,false);
+        v[0]=v[1]=true;
+        int no=r;
+        for(int i=2;i*i<=no;i++)
+        {
+            if(v[i]==false)
+            {
+                for(int j=i*i;j<=no;j=j+i)
+                {
+                    v[j]=true;
+                }
+            }
+            
+        }
+        int c2=0;
+        for(int i=0;i<r;i++)
+        {
+            if(v[i]==false)
+            {
+                c2++;
+            }
+            
+        }
+        return c2;
+    }
+};
