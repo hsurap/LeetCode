@@ -1,0 +1,21 @@
+class Solution {
+public:
+    double func(double x, int n)
+    {
+        if(n==0)return 1;
+        double sans=func(x,n/2);
+        if(n%2==0)
+            return sans*sans;
+        else
+            return x*sans*sans;
+    }
+    double myPow(double x, int n) 
+    {
+        bool negetive=false;
+        if(n<0)negetive=true;
+        if(negetive)
+            return 1/func(x,abs(n));
+        return func(x,n);
+        
+    }
+};
