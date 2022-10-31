@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool isToeplitzMatrix(vector<vector<int>>& m) {
+        int r=m.size(),c=m[0].size();
+        for(int p=m.size()-1;p>=0;p--)
+        {
+            int i=p,j=0;
+            int no=m[p][0];
+            while(i<r && j<c)
+            {
+                if(m[i][j]!=no)return false;
+                i++;
+                j++;
+            }
+        }
+        for(int p=1;p<m[0].size();p++)
+        {
+            int i=0,j=p;
+            int no=m[0][p];
+            while(i<r && j<c)
+            {
+                if(m[i][j]!=no)return false;
+                i++;
+                j++;
+            }
+        }
+        
+        return true;
+    }
+};
