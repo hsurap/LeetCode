@@ -1,0 +1,49 @@
+class Solution {
+public:
+    string mostCommonWord(string p, vector<string>& banned) 
+    {
+        unordered_map<string,int>map;
+        int i=0;
+        while(i<p.size())
+        {
+            string s="";
+            while(i<p.size() && (p[i]>='a' && p[i]<='z' )||  (p[i]>='A' && p[i]<='Z') )
+            {
+                if(p[i]>='a' && p[i]<='z')
+                    s=s+p[i];
+                else
+                {
+                    char ch=p[i]-'A'+'a';
+                    s=s+ch;
+                }
+                i++;
+                    
+            }
+            map[s]++;
+            while(i<p.size() && !(p[i]>='a' && p[i]<='z' ) && !(p[i]>='A' && p[i]<='z'))
+            {
+                i++;
+            }
+        }
+        unordered_map<string,int>check;
+        for(int i=0;i<banned.size();i++)
+        {
+            check[banned[i]]=1;
+        }
+        int cc=0;
+        string ans="";
+        for(auto i:map)
+        {
+            if(!check.count(i.first))
+            {
+                if(i.second>cc)
+                {
+                    cc=i.second;
+                    ans="";
+                    ans=ans+i.first;
+                }
+            }
+        }
+        return ans;
+    }
+};
