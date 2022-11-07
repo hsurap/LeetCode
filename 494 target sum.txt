@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int func(vector<int>&a,int t,int i)
+    {
+        if(i==0)
+        {
+            if(t==0 && a[i]==0)
+                return 2;
+            if(abs(t)==a[i])return 1;
+            return 0;
+        }
+        int c1=func(a,t-a[i],i-1);
+        int c2=func(a,t+a[i],i-1);
+        return c1+c2;
+    }
+    int findTargetSumWays(vector<int>& nums, int target) {
+        return func(nums,target,nums.size()-1);
+    }
+};
