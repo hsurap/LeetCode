@@ -1,0 +1,41 @@
+class Solution {
+public:
+     int func(vector<int>& a,int i,bool buy,int n,vector<vector<int>>&dp)
+    {
+        if(i>=n)return 0;
+        if(dp[i][buy]!=-1)return dp[i][buy];
+        if(buy)
+        {
+            int p1=-1*a[i]+func(a,i+1,false,n,dp);
+            int p2=func(a,i+1,true,n,dp);
+            return dp[i][buy] = max(p1,p2);
+        }
+        else{
+            int p1=a[i]+func(a,i+2,true,n,dp);
+            int p2=func(a,i+1,false,n,dp);
+            return dp[i][buy]= max(p1,p2);
+        }
+        
+    }
+    int maxProfit(vector<int>& a) {
+        vector<vector<int>>dp(a.size()+2,vector<int>(2,0));
+        for(int i=a.size()-1;i>=0;i--)
+        {
+            for(int buy=0;buy<2;buy++)
+            {
+                if(buy)
+                {
+                    int p1=-1*a[i]+dp[i+1][false];
+                    int p2=dp[i+1][true];
+                    dp[i][buy] = max(p1,p2);
+                }
+                else{
+                    int p1=a[i]+dp[i+2][true];
+                    int p2=dp[i+1][false];
+                    dp[i][buy]= max(p1,p2);
+                }
+            }
+        }
+        return dp[0][1];
+    }
+};
