@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int func(vector<int>& cuts,int st,int en,vector<vector<int>>&dp)
+    {
+        if(st>en)return 0;
+        if(dp[st][en]!=-1)return dp[st][en];
+        int ans=INT_MAX;
+        for(int i=st;i<=en;i++)
+        {
+            int ca=func(cuts,st,i-1,dp)+func(cuts,i+1,en,dp)+cuts[en+1]-cuts[st-1];
+            ans=min(ans,ca);
+        }
+        return dp[st][en]= ans;
+    }
+    int minCost(int n, vector<int>& cuts)
+    {
+        vector<vector<int>>dp(cuts.size()+2,vector<int>(cuts.size()+2,0));
+        sort(cuts.begin(),cuts.end());
+        cuts.insert(cuts.begin(),0);
+        cuts.push_back(n);
+        int sz=cuts.size();
+        for(int st=sz-2;st>=1;st--)
+        {
+            for(int en=st;en<=sz-2;en++)
+            {
+                int ans=1e8;
+                for(int i=st;i<=en;i++)
+                {
+                    int ca=dp[st][i-1]+dp[i+1][en]+cuts[en+1]-cuts[st-1];
+                    ans=min(ans,ca);
+                }
+                dp[st][en]=ans;
+            }
+        }
+        return dp[1][sz-2];
+    }
+};
