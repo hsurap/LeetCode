@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int maximumSum(vector<int>& a) 
+    {
+       unordered_map<int,pair<int,int>>map;
+        for(auto i:a)
+        {
+            int s=0;
+            int no=i;
+            while(i>0)
+            {
+                s+=(i%10);
+                i=i/10;
+            }
+            if(map.count(s))
+            {
+                if(no>map[s].first)
+                {
+                    map[s].second=map[s].first;
+                    map[s].first=no;
+                }
+                else if(no>map[s].second)
+                {
+                    map[s].second=no;
+                }
+            }
+            else{
+                map[s]={no,-1};
+            }
+        }
+        // for(auto i: map)
+        // {
+        //     cout<<i.first<<" "<<i.second.first<<" "<<i.second.second<<" "<<endl;
+        // }
+        int ans=-1;
+        for(auto i:map)
+        {
+            if(i.second.second!=-1)
+            {
+                int ca=i.second.first+i.second.second;
+                ans=max(ans,ca);
+            }
+        }
+        return ans;
+    }
+};
