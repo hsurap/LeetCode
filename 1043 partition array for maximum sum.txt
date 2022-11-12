@@ -1,0 +1,27 @@
+#include<bits/stdc++.h>
+class Solution {
+public:
+    int func(vector<int>&a,int k,int i,vector<vector<int>>&dp)
+    {
+        if(i==a.size())return 0;
+        if(dp[i][k]!=-1)return dp[i][k];
+        int mxsum=INT_MIN;
+        int maxele=INT_MIN;
+        int len=0;
+        int n=a.size();
+        int no=min(i+k,n);
+        for(int p=i;p<no;p++)
+        {
+            len++;
+            maxele=max(maxele,a[p]);
+            int ca=maxele*len+func(a,k,p+1,dp);
+            mxsum=max(mxsum,ca);
+        }
+        return dp[i][k]= mxsum;
+    }
+    int maxSumAfterPartitioning(vector<int>& a, int k) 
+    {
+        vector<vector<int>>dp(a.size(),vector<int>(k+1,-1));
+        return func(a,k,0,dp);
+    }
+};
