@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int func(vector<int>& a,int fee,int i,bool buy)
+    {
+        if(i==a.size())return 0;
+        if(buy)
+        {
+            int p1=-1*a[i]+func(a,fee,i+1,false);
+            int p2=func(a,fee,i+1,true);
+            return  max(p1,p2);
+        }
+        else{
+            int p1=a[i]-fee+func(a,fee,i+1,true);
+            int p2=func(a,fee,i+1,false);
+            return max(p1,p2);
+        }
+    }
+    int maxProfit(vector<int>& a, int fee) {
+        vector<int>ahead(2,0),curr(2,0);
+        for(int i=a.size()-1;i>=0;i--)
+        {
+            for(int buy=0;buy<2;buy++)
+            {
+                if(buy)
+                {
+                    int p1=-1*a[i]+ahead[0];
+                    int p2=ahead[1];
+                    curr[buy] = max(p1,p2);
+                }
+                else{
+                    int p1=a[i]+ahead[1]-fee;
+                    int p2=ahead[0];
+                    curr[buy]= max(p1,p2);
+                }
+            }
+            ahead=curr;
+        }
+        return ahead[1];
+    }
+};
