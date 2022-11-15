@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int maxProfit(int k, vector<int>& a) 
+    {
+        int n=a.size();
+        vector<int>ahead(2*k+1,0);
+        vector<int>curr(2*k+1,0);
+        for(int i=n-1;i>=0;i--)
+        {
+            for(int tno=2*k-1;tno>=0;tno--)
+            {
+                if(tno%2==0)
+                {
+                    int p1=ahead[tno];
+                    int p2=-a[i]+ahead[tno+1];
+                    curr[tno]= max(p1,p2);
+                }
+                else{
+                    int p1=+a[i]+ahead[tno+1];
+                    int p2=ahead[tno];
+                    curr[tno]= max(p1,p2);
+                }
+            }
+            ahead=curr;
+        }
+        return ahead[0];
+    }
+};
