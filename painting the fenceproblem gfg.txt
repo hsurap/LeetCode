@@ -1,0 +1,16 @@
+public:
+    int m=1e9+7;
+    long long countWays(int n, int k){
+        if(n==1)
+            return k;
+        long long s=k;
+        long long d=k*(k-1);
+        long long t=s+d;
+        for(int i=3;i<=n;i++)
+        {
+            s=d%m;
+            d=(t*(k-1))%m;
+            t=(s+d)%m;
+        }
+        return t%m;
+    }
