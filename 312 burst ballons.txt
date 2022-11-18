@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int func(vector<int>&a,int i,int j,vector<vector<int>>&dp)
+    {
+        if(i>j)return 0;
+        int maxa=INT_MIN;
+        if(dp[i][j]!=-1)return dp[i][j];
+        for(int k=i;k<=j;k++)
+        {
+            int ca=a[k]*a[i-1]*a[j+1] +func(a,i,k-1,dp)+func(a,k+1,j,dp);
+            maxa=max(ca,maxa);
+        }
+        return dp[i][j]= maxa;
+        
+    }
+    int maxCoins(vector<int>& a) 
+    {
+        a.insert(a.begin(),1);
+        a.push_back(1);
+        int n=a.size();
+        vector<vector<int>>dp(n,vector<int>(n,0));
+        for(int i=n-2;i>=1;i--)
+        {
+            for(int j=1;j<=n-2;j++)
+            {
+                if(i>j)continue;
+                int maxa=INT_MIN;
+                for(int k=i;k<=j;k++)
+                {
+                    int ca=a[k]*a[i-1]*a[j+1] +dp[i][k-1]+dp[k+1][j];
+                    maxa=max(ca,maxa);
+                }
+                dp[i][j]= maxa;
+            }
+        }
+        return dp[1][n-2];
+    }
+};
