@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) 
+    {
+        unordered_map<int,int>map;
+        unordered_map<int,int>check;
+        for(int i=0;i<arr.size();i++)
+            map[arr[i]]++;
+        for(auto i: map)
+        {
+            if(check.count(i.second))
+                return false;
+            check[i.second]=1;
+        }
+        return true;
+    }
+};
