@@ -1,0 +1,21 @@
+class Solution {
+public:
+    void func(vector<int>& nums,vector<vector<int>>&fans,vector<int>&ans,int i)
+    {
+        if(i==nums.size())
+        {
+            fans.push_back(ans);
+            return ;
+        }
+        ans.push_back(nums[i]);
+        func(nums,fans,ans,i+1);
+        ans.pop_back();
+        func(nums,fans,ans,i+1);
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>>fans;
+        vector<int>ans;
+        func(nums,fans,ans,0);
+        return fans;
+    }
+};
