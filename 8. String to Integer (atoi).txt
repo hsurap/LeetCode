@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int myAtoi(string s) {
+        int mini=INT_MIN;
+        int maxa=INT_MAX;
+        long long int no=0;
+        bool chk=true;
+        int i=0;
+        int n=s.size();
+        while(i<n &&s[i]==' ')
+            i++;
+        if(i==n)return 0;
+        bool onlyone=true;
+        while(i<n)
+        {
+            if(s[i]>='0' && s[i]<='9')
+            {
+                no=no*10+(s[i]-'0');
+                onlyone=false;
+            }
+            else if(s[i]=='-' && onlyone)
+            {
+                onlyone=false;
+                chk=false;
+            }
+            else if(s[i]=='+' && onlyone)
+            {
+                onlyone=false;
+                chk=true;
+            }
+            else break;
+            if(no>maxa && chk==true)return maxa;
+            if(no*-1 <mini && chk==false)return mini;
+            i++;
+        }
+        if(chk)
+            return no;
+        else
+            return -1*no;
+    }
+};
