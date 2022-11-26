@@ -1,0 +1,41 @@
+class Solution {
+public:
+    string arr[10]={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    vector<string> letterCombinations(string s) 
+    {
+        vector<string>ans;
+        if(s.size()==0)return ans;
+        if(s.size()==1)
+        {
+            char ch=s[0];
+            int no=ch-'0';
+            string my_string=arr[no];
+            for(int i=0;i<arr[no].size();i++)
+            {
+                string ss="";
+                ss=my_string[i];
+                ans.push_back(ss);
+            }
+            return ans;
+        }
+        vector<string>sans=letterCombinations(s.substr(1));
+        int no=s[0]-'0';
+        for(int i=0;i<arr[no].size();i++)
+        {
+            for(int i=0;i<sans.size();i++)
+            {
+                ans.push_back(sans[i]);
+            }
+        }
+        for(int i=0;i<arr[no].size();i++)
+        {
+            for(int j=0;j<sans.size();j++)
+            {
+                string news=ans[sans.size()*i+j];
+                news=arr[no][i]+news;
+                ans[sans.size()*i+j]=news;
+            }
+        }
+        return ans;
+    }
+};
