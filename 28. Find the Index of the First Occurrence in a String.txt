@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        if(needle.size()==0)
+            return 0;
+        int size=haystack.size();
+        int index=haystack.find(needle);
+        if(index<size)
+            return index;
+        else
+            return -1;
+    }
+};
