@@ -1,0 +1,41 @@
+class Solution {
+public:
+    void func(vector<int>& a, int t,int i,vector<vector<int>>&ans,vector<int>sans)
+    {
+        if(t==0)
+        {
+            ans.push_back(sans);
+            return ;
+        }
+        if(i==a.size())return;
+        for(int j=i;j<a.size();j++)
+        {
+            if(a[j]<=t)
+            {
+                if(j==i)
+                {
+                    sans.push_back(a[j]);
+                    func(a,t-a[i],j+1,ans,sans);
+                    sans.pop_back();
+                }
+                else{
+                    if(a[j]!=a[j-1])
+                    {
+                        sans.push_back(a[j]);
+                        func(a,t-a[j],j+1,ans,sans);
+                        sans.pop_back();
+                    }
+                }
+            }
+            else
+                break;
+        }
+    }
+    vector<vector<int>> combinationSum2(vector<int>& a, int t) {
+        sort(a.begin(),a.end());
+        vector<vector<int>>ans;
+        vector<int>sans;
+        func(a,t,0,ans,sans);
+        return ans;
+    }
+};
