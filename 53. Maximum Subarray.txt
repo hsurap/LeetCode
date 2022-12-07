@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int sum=0;
+        int ans=0;
+        int maxx=-100000;
+        for(int i=0;i<nums.size();i++)
+        {
+            maxx=max(maxx,nums[i]);
+        }
+        if(maxx<0)
+            return maxx;
+        int cs=0,ce=0,ms=0,me=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            sum+=nums[i];
+            if(sum>ans)
+            {
+                ans=sum;
+                ce=i;
+                ms=cs;
+                me=ce;
+            }
+            else{
+                if(sum<0)
+                {
+                    sum=0;
+                    cs=i+1;
+                    ce=i+1;
+                }
+                else
+                    ce++;
+            }
+            
+            
+        }
+        cout<<ms<<" "<<me<<" "<<endl;
+        return ans;
+    }
+};
