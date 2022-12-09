@@ -1,0 +1,45 @@
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& a) 
+    {
+        vector<int>list;
+        int sr=0,er=a.size()-1,sc=0,ec=a[0].size()-1;
+        int total=a.size()*a[0].size();
+        while(total>0)
+        {
+            for(int i=sc;i<=ec;i++)
+            {
+                list.push_back(a[sr][i]);
+                total--;
+            }
+            sr++;
+            for(int i=sr;i<=er;i++)
+            {
+                list.push_back(a[i][ec]);
+                total--;
+            }
+            ec--;
+            if(total)
+            {
+                for(int i=ec;i>=sc;i--)
+                {
+                    list.push_back(a[er][i]);
+                    total--;
+                }
+                er--;
+            }
+                if(total>0)
+                {
+                    for(int i=er;i>=sr;i--)
+                {
+                    list.push_back(a[i][sc]);
+                    total--;
+                }
+                sc++;
+                }
+                
+            
+        }
+        return list;
+    }
+};
