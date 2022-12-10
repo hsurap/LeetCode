@@ -1,0 +1,43 @@
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& v) 
+    {
+        sort(v.begin(),v.end());
+        vector<vector<int>>ans;
+        if(v.size()==0 )
+            return ans;
+        if(v.size()==1)
+        {
+            vector<int>sv;
+            sv.push_back(v[0][0]);
+            sv.push_back(v[0][1]);
+            ans.push_back(sv);
+            return ans;
+        }
+        int r=v.size();
+        int st=v[0][0];
+        int en=v[0][1];
+        int j=1;
+        while(j<r)
+        {
+            if(en<v[j][0])
+            {
+                vector<int>sv;
+                sv.push_back(st);
+                sv.push_back(en);
+                ans.push_back(sv);
+                st=v[j][0];
+                en=v[j][1];
+            }
+            else{
+                en=max(en,v[j][1]);
+            }
+            j++;
+        }
+        vector<int>sv;
+        sv.push_back(st);
+        sv.push_back(en);
+        ans.push_back(sv);
+        return ans;
+    }
+};
