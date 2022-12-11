@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string getPermutation(int n, int k) {
+        string ans="";
+        vector<int>v;
+        long long int fact=1;
+        for(int i=1;i<=n;i++)
+        {
+            v.push_back(i);
+            fact=fact*i;
+        }
+        k--;
+        while(v.size()!=1)
+        {
+            fact=fact/v.size();
+            int no=k/fact;
+            k=k%fact;
+            string ss=to_string(v[no]);
+            v.erase(v.begin()+no);
+            ans=ans+ss;
+        }
+        ans=ans+to_string(v[0]);
+        return ans;
+    }
+};
