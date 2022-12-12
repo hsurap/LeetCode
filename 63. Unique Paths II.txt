@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int func(int a,int b,vector<vector<int>>& v,vector<vector<int>>& dp)
+    {
+        if(a<0 || b<0 || v[a][b]==1)
+            return 0;
+        if(a==0 && b==0 && v[a][b]==0)
+            return 1;
+        if(dp[a][b]!=-1)
+            return dp[a][b];
+        int l=0,r=0;
+        if( a>0 && v[a-1][b]!=1)
+            l=func(a-1,b,v,dp);
+        if(b>0 && v[a][b-1]!=1)
+            r=func(a,b-1,v,dp);
+        return dp[a][b]=l+r;
+    }
+    int uniquePathsWithObstacles(vector<vector<int>>& v)
+    {
+        int r=v.size()-1;
+        int c=v[0].size()-1;
+        vector<vector<int>>dp(r+1,vector<int>(c+1,-1));
+        return func(r,c,v,dp);
+    }
+};
