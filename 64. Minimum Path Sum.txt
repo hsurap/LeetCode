@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int minPathSum(vector<vector<int>>& v) 
+    {
+        int r=v.size();
+        int c=v[0].size();
+        vector<vector<int>>dp(r,vector<int>(c,-1));
+        for(int i=0;i<r;i++)
+        {
+            for(int j=0;j<c;j++)
+            {
+                if(i==0 && j==0)
+                    dp[i][j]=v[0][0];
+                else{
+                    int u=INT_MAX,l=INT_MAX;
+                    if(i>0)
+                        u=dp[i-1][j];
+                    if(j>0)
+                        l=dp[i][j-1];
+                    dp[i][j]=v[i][j]+min(u,l);
+                }
+            }
+        }
+        return dp[r-1][c-1];
+    }
+};
