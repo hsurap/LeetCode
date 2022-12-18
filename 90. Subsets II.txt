@@ -1,0 +1,33 @@
+class Solution {
+public:
+    void func(vector<int>& nums,int i,vector<int>sv,vector<vector<int>>&ans)
+    {
+        ans.push_back(sv);
+        if(i>=nums.size())return;
+        for(int j=i;j<nums.size();j++)
+        {
+            if(j==i)
+            {
+                sv.push_back(nums[j]);
+                func(nums,j+1,sv,ans);
+                sv.pop_back();
+            }
+            else{
+                if(nums[j]!=nums[j-1])
+                {
+                    sv.push_back(nums[j]);
+                    func(nums,j+1,sv,ans);
+                    sv.pop_back();
+                }
+            }
+        }
+    }
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) 
+    {
+        vector<vector<int>>ans;
+        vector<int>sv;
+        sort(nums.begin(),nums.end());
+        func(nums,0,sv,ans);
+        return ans;
+    }
+};
