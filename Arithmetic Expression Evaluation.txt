@@ -1,0 +1,58 @@
+#include <bits/stdc++.h> 
+int evaluateArithmeticExpression(string &s) 
+{
+    int i=0;
+    int no1,no2;
+    stack<string>st;
+    while(i<s.size())
+    {
+        if(s[i]=='(' || s[i]=='+' || s[i]=='-' || s[i]=='/' ||s[i]=='*')
+        {
+            string ns="";
+            ns+=s[i];
+            st.push(ns);
+            i++;
+        } 
+        else if(s[i]==')')
+        {
+            no2=stoi(st.top());
+            st.pop();
+            if(st.top()=="(")
+            {
+                st.pop();
+                st.push(to_string(no2));
+            }
+            else{
+                string ch=st.top();
+                st.pop();
+                int no1=stoi(st.top());
+                st.pop();
+                //st.pop();
+                if(ch=="+")
+                    st.push(to_string(no1+no2));
+                else if(ch=="-")
+                    st.push(to_string(no1-no2));
+                else if(ch=="/")
+                    st.push(to_string(no1/no2));
+                else
+                    st.push(to_string(no1*no2));
+                i--;
+            }
+            i++;
+        }
+        else{
+            int no=0;
+            string num;
+            while(i<s.size() && s[i]>='0' && s[i]<='9')
+            {
+                no=no*10+(s[i]-'0');
+                i++;
+            }
+            //cout<<no<<"--";
+            num=to_string(no);
+            //cout<<num<<" ";
+            st.push(num);
+        }
+    }
+    return stoi(st.top());
+}
