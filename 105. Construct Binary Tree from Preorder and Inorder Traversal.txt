@@ -1,0 +1,46 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;https://assets.leetcode.com/uploads/2021/02/19/tree.jpg
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* func(vector<int>preorder ,vector<int>inorder,int ps,int pe,int is,int ie)
+    {
+        if(is>ie || ps>pe)
+            return NULL;
+        int rootdata=preorder[ps];
+        TreeNode*root=new TreeNode(rootdata);
+        int rootindex=-1;
+        for(int i=is;i<=ie;i++)
+        {
+            if(rootdata==inorder[i])
+            {
+                rootindex=i;
+                break;
+            }
+        }
+        int lis=is;
+        int lie=rootindex-1;
+        int lps=ps+1;
+        int lpe=lie-lis+lps;
+        int rps=lpe+1;
+        int rpe=pe;
+        int ris=rootindex+1;
+        int rie=ie;
+        root->left=func(preorder,inorder,lps,lpe,lis,lie);
+        root->right=func(preorder,inorder,rps,rpe,ris,rie);
+        return root;
+        
+    }
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) 
+    {
+        return func(preorder,inorder,0,preorder.size()-1,0,inorder.size()-1);
+    }
+};
