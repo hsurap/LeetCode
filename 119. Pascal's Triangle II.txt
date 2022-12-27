@@ -1,0 +1,46 @@
+class Solution {
+public:
+    vector<vector<int>>func(int row)
+    {
+        vector<vector<int>> ans;
+        vector<int> small;
+        small.push_back(1);
+        ans.push_back(small);
+        if(row == 1)
+        {
+            return ans;
+        }
+        small.push_back(1);
+        ans.push_back(small);
+        if(row == 2)
+        {
+            return ans;
+        }
+        
+        if(row>2)
+        {
+            for(int i=3;i<=row;i++)
+            {
+                vector<int>sm;
+                sm.push_back(1);
+                int count=i-2;
+                while(count>0)
+                {
+                    int siz=sm.size();
+                    sm.push_back(ans[i-2][siz-1]+ans[i-2][siz]);
+                        count--;
+                }
+                sm.push_back(1);
+                ans.push_back(sm);
+            }
+        }
+        return ans;
+    }
+    vector<int> getRow(int rowIndex)
+    {
+        int no=rowIndex;
+        cout<<no;
+        vector<vector<int>> small=func(rowIndex+1);
+        return small[no];
+    }
+};
