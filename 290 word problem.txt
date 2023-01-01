@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool wordPattern(string p, string s) {
+        vector<string>v(26,"");
+        int j=0;
+        string word="";
+        for(int i=0;i<p.size();i++)
+        {
+            char ch=p[i];
+            word="";
+            while(j<s.size() && s[j]!=' ')
+            {
+                word=word+s[j];
+                j++;
+            }
+            j++;
+            if(word=="")return false;
+            if(v[ch-'a']=="")
+                v[ch-'a']=word;
+            else{
+                if(v[ch-'a']!=word)return false;
+            }
+            for(int k=0;k<26;k++)
+            {
+                int n=ch-'a';
+                if(v[k]==word && k!=n)
+                    return false;
+            }
+            
+        }
+        if(j<s.size())return false;
+        return true;
+    }
+};
