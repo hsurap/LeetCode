@@ -1,0 +1,38 @@
+class Solution {
+public:
+    static bool cmp(vector<int>&v1,vector<int>&v2)
+    {
+        if(v1[0]!=v2[0])
+            return v1[0]<v2[0];
+        return v1[1]<v2[1];
+    }
+    int findMinArrowShots(vector<vector<int>>& a) 
+    {
+        if(a.size()==0 || a.size()==1)return a.size();
+        sort(a.begin(),a.end(),cmp);
+        // for(auto i:a)
+        // {
+        //     cout<<i[0]<<" "<<i[1]<<endl;
+        // }
+        int st=a[0][0];
+        int en=a[0][1];
+        int i=1,count=0;
+        bool chk;
+        while(i<a.size())
+        {
+            if(a[i][0]<=en)
+            {
+                en=min(en,a[i][1]);
+                i++;
+            }
+            else{
+                count++;
+                st=a[i][0];
+                en=a[i][1];
+                i++;
+            }
+        }
+        count++;
+        return count;
+    }
+};
