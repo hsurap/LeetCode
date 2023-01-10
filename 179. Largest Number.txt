@@ -1,0 +1,31 @@
+class Solution {
+public:
+    static bool cmp(string &x,string &y){
+        string one=x+y;
+        string two=y+x;
+        if(one>two)
+            return true;
+        else
+            return false;
+
+    }
+    string largestNumber(vector<int>& nums) {
+
+        vector<string> s;
+
+        for(auto i:nums){
+            string str= to_string(i);
+            s.push_back(str);
+        }
+
+        sort(s.begin(),s.end(),cmp);
+        if(s[0]=="0")return "0";
+        string ans="";
+        for(auto i:s){
+            ans+=i; }
+        // while(ans[0]=='0'&&ans.size()>1){
+        //     ans.erase(ans.begin());
+        // }
+        return ans;
+    }
+};
