@@ -1,0 +1,32 @@
+class Solution {
+public:
+    unordered_map<char,int> func(unordered_map<int,vector<int>>&map,int cn,int pn,string &labels,vector<int>&ans)
+    {
+        unordered_map<char,int>count;
+        char my_lab=labels[cn];
+        unordered_map<char,int>sc;
+        for(auto i:map[cn])
+        {
+            if(i==pn)continue;
+            sc=func(map,i,cn,labels,ans);
+            for(auto j:sc)
+                count[j.first]+=j.second;
+        }
+        count[my_lab]++;
+        ans[cn]=count[my_lab];
+        return count;
+
+    }
+    vector<int> countSubTrees(int n, vector<vector<int>>& edges, string labels) {
+        unordered_map<int,vector<int>>map;
+        for(int i=0;i<edges.size();i++)
+        {
+            map[edges[i][0]].push_back(edges[i][1]);
+            map[edges[i][1]].push_back(edges[i][0]);
+        }
+        unordered_map<char,int>count;
+        vector<int>ans(n,0);
+        func(map,0,-1,labels,ans);
+        return ans;
+    }
+};
