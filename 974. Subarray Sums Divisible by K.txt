@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int subarraysDivByK(vector<int>& a, int k) 
+    {
+        vector<int>prefix(a.size(),(a[0]%k+k)%k);
+        
+        for(int i=1;i<a.size();i++)
+        {
+            a[i]=(a[i]%k+k)%k;
+            //cout<<a[i]<<" ";
+            prefix[i]=(prefix[i-1]%k+a[i]%k)%k;
+        }
+        for(auto i:prefix)
+            cout<<i<<" ";
+        unordered_map<int,int>map;
+        int ans=0;
+        for(int i=0;i<a.size();i++)
+        {
+            if(map.count(prefix[i]))
+                ans+=map[prefix[i]];
+            if(prefix[i]==0)ans++;
+            map[prefix[i]]++;
+        }
+        return ans;
+    }
+};
