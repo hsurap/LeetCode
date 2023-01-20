@@ -1,0 +1,30 @@
+class Solution {
+public:
+    void func(vector<int>& a,int i,set<vector<int>>&ans,vector<int>sv)
+    {
+        if(i==a.size())
+        {
+            if(sv.size()>=2)
+                ans.insert(sv);
+            return ;
+        }
+        if(sv.size()==0 || a[i]>=sv[sv.size()-1])
+        {
+            sv.push_back(a[i]);
+            func(a,i+1,ans,sv);
+            sv.pop_back();
+        }
+        func(a,i+1,ans,sv);
+        return ;
+    }
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        set<vector<int>>ans;
+        vector<int>sv;
+        func(nums,0,ans,sv);
+        vector<vector<int>>fans;
+        for(auto i:ans)
+            fans.push_back(i);
+        return fans;
+
+    }
+};
