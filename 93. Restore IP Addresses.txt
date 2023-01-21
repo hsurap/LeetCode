@@ -1,0 +1,56 @@
+class Solution {
+public:
+    void func(string s,vector<string>&ans,vector<int>v,int ind,int cn)
+    {
+        // for(auto i:v)
+        //     cout<<i<<" ";
+        // cout<<endl;
+        if(ind==s.size())
+        {
+            if(v.size()==4)
+            {
+                string cs=to_string(v[0]);
+                for(int i=1;i<4;i++)
+                {
+                    cs=cs+".";
+                    cs+=to_string(v[i]);
+                }
+                ans.push_back(cs);
+            }
+            return ;
+        }
+        if(v.size()>=5)return;
+        int myno=cn;
+        for(int j=ind;j<s.size() && j < ind+3;j++)
+        {
+            if(myno==0 && s[j]=='0')
+            {
+                v.push_back(0);
+                func(s,ans,v,j+1,0);
+                v.pop_back();
+                break;
+            }
+            else{
+                myno=myno*10+(s[j]-'0');
+                if(myno<=255)
+                {
+                    v.push_back(myno);
+                    func(s,ans,v,j+1,0);
+                    v.pop_back();
+                    //break;
+                }
+                else
+                    break;
+            }
+        }
+        return ;
+
+    }
+    vector<string> restoreIpAddresses(string s) {
+        if(s.size()<4 || s.size()>12)return {};
+        vector<string>ans;
+        vector<int>v;
+        func(s,ans,v,0,0);
+        return ans;
+    }
+};
