@@ -1,0 +1,54 @@
+class Solution {
+public:
+    void func(vector<vector<int>>&dp,string s,vector<vector<string>>&ans,vector<string>small,int st)
+    {
+        if(st==s.size())
+        {
+            ans.push_back(small);
+            return ;
+        }
+        string str="";
+        for(int i=st;i<s.size();i++)
+        {
+            str=str+s[i];
+            if(dp[st][i]==1)
+            {
+                small.push_back(str);
+                func(dp,s,ans,small,i+1);
+                small.pop_back();
+            }
+        }
+        return ;
+    }
+    vector<vector<string>> partition(string s) 
+    {
+        int n=s.size();
+        vector<vector<int>>dp(n,vector<int>(n,0));
+        for(int i=0;i<n;i++)
+            dp[i][i]=1;
+        int r=0,c=1;
+        while(r<n && c<n)
+        {
+            if(s[r]==s[c])
+                dp[r][c]=1;
+            r++;
+            c++;
+        }
+        for(int i=2;i<n;i++)
+        {
+            r=0,c=i;
+            while(r<n && c<n)
+            {
+                if(s[r]==s[c] && dp[r+1][c-1]==1)
+                    dp[r][c]=1;
+                r++;
+                c++;
+            }
+        }
+        vector<vector<string>>ans;
+        vector<string>small;
+        func(dp,s,ans,small,0);
+        return ans;
+
+    }
+};
