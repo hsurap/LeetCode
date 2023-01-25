@@ -1,0 +1,33 @@
+class Solution {
+public:
+    void bfs(vector<int>& edges,int st,int d,vector<int>&distance)
+    {
+        if(distance[st]!=1000000)return;
+        distance[st]=d;
+        if(edges[st]==-1)return;
+        bfs(edges,edges[st],d+1,distance);
+    }
+    int closestMeetingNode(vector<int>& edges, int node1, int node2) {
+        int n=edges.size();
+        vector<int>dis1(n,1000000);
+        vector<int>dis2(n,1000000);
+        bfs(edges,node1,1,dis1);
+        bfs(edges,node2,1,dis2);
+        // for(auto i:dis1)
+        //     cout<<i<<" ";
+        // cout<<endl;
+        // for(auto i:dis2)
+        //     cout<<i<<" ";
+        int ans=-1,mind=1000000;
+        for(int i=0;i<n;i++)
+        {
+            if(max(dis1[i],dis2[i])<mind)
+            {
+                ans=i;
+                mind=max(dis1[i],dis2[i]);
+            }
+                
+        }
+        return ans;
+    }
+};
