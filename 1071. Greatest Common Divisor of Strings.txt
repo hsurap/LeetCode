@@ -1,0 +1,39 @@
+class Solution {
+public:
+    string gcdOfStrings(string s1, string s2) 
+    {
+        int n=s1.size();
+        int m=s2.size();
+        if(n<m)return gcdOfStrings(s2,s1);
+        string small="";
+        string ans="";
+        for(int i=0;i<s2.size();i++)
+        {
+            small=small+s2[i];
+            if(s1.size()%small.size()!=0)continue;
+            if(s2.size()%small.size()!=0)continue;
+            bool chk=false;
+            for(int j=0;j<s1.size();j=j+small.size())
+            {
+                if(s1.substr(j,small.size())!=small)
+                {
+                    chk=true;
+                    break;
+                }
+            }
+            for(int j=0;j<s2.size();j=j+small.size())
+            {
+                if(s2.substr(j,small.size())!=small)
+                {
+                    chk=true;
+                    break;
+                }
+            }
+            if(chk==false)
+                ans=small;
+        }
+        return ans;
+        
+
+    }
+};
