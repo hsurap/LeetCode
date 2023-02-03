@@ -1,0 +1,46 @@
+class Solution {
+public:
+    bool func(string s,string p,int i,int j,vector<vector<int>> &dp)
+    {
+        if(i>=s.size() && j>=p.size())return true;
+        if(j>=p.size() && i<s.size())return false;
+        if(i>=s.size() && j<p.size())
+        {
+            int k=j;
+            while(k<p.size())
+            {
+                //cout<<"jjj";
+                if(p[k]=='.' && p[k+1]!='*')return false;
+                else if(p[k]>='a' && p[k]<='z' && p[k+1]!='*')return false;
+                k++;
+            }
+            return true;
+        }
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+        if(p[j]=='.' && p[j+1]!='*')
+            return dp[i][j]= func(s,p,i+1,j+1,dp);
+        else if(p[j]>='a' && p[j]<='z' && p[j+1]!='*')
+        {
+            if(p[j]==s[i])return dp[i][j]= func(s,p,i+1,j+1,dp);
+            return false;
+        }
+        else{
+            if(p[j]=='.')
+            {
+                return dp[i][j]= func(s,p,i,j+2,dp) || func(s,p,i+1,j,dp);
+            }else{
+                if(p[j]!=s[i])
+                    return dp[i][j]= func(s,p,i,j+2,dp);
+                else
+                    return dp[i][j]= func(s,p,i,j+2,dp) || func(s,p,i+1,j,dp);
+            }
+        }
+            
+    }
+    bool isMatch(string s, string p) {
+        vector<vector<int>> dp(s.size()+1, vector<int>(p.size(), -1));
+        return func(s,p,0,0,dp);
+    }
+};
