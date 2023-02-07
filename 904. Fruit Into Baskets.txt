@@ -1,0 +1,73 @@
+class Solution {
+public:
+    int totalFruit(vector<int>& a) 
+    {
+        int st=0,en=0;
+        pair<int,int>p1={-1,0};
+        pair<int,int>p2={-1,0};
+        int ans=0;
+        while(st<a.size())
+        {
+            //cout<<st<<" ";
+            //cout<<p1.first<<" "<<p1.second<<" "<<p2.first<<" "<<p2.second<<endl;
+            if(p1.first==-1 && a[st]!=p2.first)
+            {
+                p1.first=a[st];
+                st++;
+                p1.second=1;
+                ans=max(ans,p1.second+p2.second);
+            }
+            else if(p2.first==-1 && a[st]!=p1.first)
+            {
+                p2.first=a[st];
+                st++;
+                p2.second=1;
+                ans=max(ans,p1.second+p2.second);
+            }
+            else if(a[st]==p1.first)
+            {
+                p1.second++;
+                st++;
+                ans=max(ans,p1.second+p2.second);
+            }
+            else if(a[st]==p2.first)
+            {
+                p2.second++;
+                st++;
+                ans=max(ans,p1.second+p2.second);
+            }
+            else{
+                while(en<st)
+                {
+                    if(p1.first==a[en])
+                    {
+                        p1.second--;
+                        en++;
+                        if(p1.second==0)
+                        {
+                            p1.first=a[st];
+                            p1.second=1;
+                            ans=max(ans,p1.second+p2.second);
+                            st++;
+                            break;
+                        }
+                    }
+                    else{
+                        p2.second--;
+                        en++;
+                        if(p2.second==0)
+                        {
+                            p2.first=a[st];
+                            p2.second=1;
+                            ans=max(ans,p1.second+p2.second);
+                            st++;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        ans=max(ans,p1.second+p2.second);
+        return ans;
+    }
+};
