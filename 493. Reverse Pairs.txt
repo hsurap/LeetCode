@@ -1,0 +1,54 @@
+class Solution {
+public:
+    int merge(vector<int>& nums,int st,int md,int en)
+    {
+        int size=en-st+1;
+        int temp[size];
+        int i=st,j=md+1,k=0;
+        while(i<=md && j<=en)
+        {
+            if(nums[i]<=nums[j])
+                temp[k++]=nums[i++];
+            else
+                temp[k++]=nums[j++];
+        }
+        while(i<=md)
+            temp[k++]=nums[i++];
+        while(j<=en)
+            temp[k++]=nums[j++];
+        i=st,j=md+1;
+        int ans=0;
+        while(i<=md && j<=en)
+        {
+            long long int no2=2*long(nums[j]);
+            long long int no1=nums[i];
+            if(no1>no2)
+            {
+                ans+=(md-i+1);
+                j++;
+            }
+            else
+                i++;
+        }
+        k=0;
+        for(int i=st;i<=en;i++)
+        {
+            nums[i]=temp[k++];
+        }
+        
+        return ans;
+    }
+    int func(vector<int>& nums,int st,int en)
+    {
+        if(st>=en)return 0;
+        int ans=0;
+        int md=(st+en)/2;
+        ans+=func(nums,st,md);
+        ans+=func(nums,md+1,en);
+        ans+=merge(nums,st,md,en);
+        return ans;
+    }
+    int reversePairs(vector<int>& nums) {
+        return func(nums,0,nums.size()-1);
+    }
+};
