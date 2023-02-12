@@ -1,0 +1,38 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    pair<TreeNode*,bool>func(TreeNode* root)
+    {
+        if(root==NULL)
+            return {NULL,false};
+        pair<TreeNode*,bool>la=func(root->left);
+        pair<TreeNode*,bool>ra=func(root->right);
+        if(la.second==false)
+        {
+            TreeNode* a=la.first;
+            root->left=NULL;
+        }
+        if(ra.second==false)
+        {
+            TreeNode* b=ra.first;
+            root->right=NULL;
+        }
+        if(la.second==true || ra.second==true || root->val==1)
+            return {root,true};
+        return {NULL,false};
+    }
+    TreeNode* pruneTree(TreeNode* root) 
+    {
+        return func(root).first;
+    }
+};
