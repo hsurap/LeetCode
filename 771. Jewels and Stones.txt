@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int numJewelsInStones(string je, string s) 
+    {
+        unordered_map<char,int>map;
+        for(auto j:je)
+        {
+            map[j]=0;
+        }
+        for(auto i:s)
+        {
+            if(map.count(i))
+            {
+                map[i]+=1;
+            }
+        }
+        int ans=0;
+        for(auto i:map)
+        {
+            ans+=i.second;
+        }
+        return ans;
+    }
+};
