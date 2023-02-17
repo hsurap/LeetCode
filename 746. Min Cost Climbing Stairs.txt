@@ -1,0 +1,28 @@
+class Solution {
+public:
+    // int func(vector<int>& cost,int i,vector<int>&dp)
+    // {
+    //     if(i==0 || i==1)return 0;
+    //     if(dp[i]!=-1)return dp[i];
+    //     int c1=func(cost,i-1,dp)+cost[i-1];
+    //     int c2=func(cost,i-2,dp)+cost[i-2];
+    //     return dp[i]=min(c1,c2);
+    // }
+    int minCostClimbingStairs(vector<int>& cost) {
+        // vector<int>dp(cost.size()+1);
+        // dp[0]=0;
+        // dp[1]=0;
+        int prev2=0;
+        int prev1=0;
+        int curr;
+        for(int i=2;i<=cost.size();i++)
+        {
+            int c1=prev1+cost[i-1];
+            int c2=prev2+cost[i-2];
+            curr=min(c1,c2);
+            prev2=prev1;
+            prev1=curr;
+        }
+        return prev1;
+    }
+};
