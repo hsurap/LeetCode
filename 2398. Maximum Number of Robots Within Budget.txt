@@ -1,0 +1,57 @@
+class Solution {
+public:
+    int maximumRobots(vector<int>& ct, vector<int>& rc, long long b) 
+    {
+        deque<pair<int,int>>dq;
+        queue<int>q;
+        int i=0,j=-1;
+        int n=ct.size();
+        long long sum=0;
+        int ans=0;
+        while(i<n)
+        {
+            if(dq.size()==0)
+            {
+                dq.push_back({ct[i],i});
+                q.push(rc[i]);
+                sum+=rc[i];
+            }
+            else{
+                while(dq.size()!=0 && ct[i]>=dq.back().first)
+                    dq.pop_back();
+                dq.push_back({ct[i],i});
+                q.push(rc[i]);
+                sum+=rc[i];
+            }
+            long long ca=dq.front().first + (i-j)*sum;
+            if(ca<=b)
+            {
+                ans=max(ans,i-j);
+                i++;
+            }
+            else{
+                    bool chk=true;
+                    while(chk)
+                    {
+                        j++;
+                        sum-=q.front();
+                        q.pop();
+                        while(dq.size()!=0 && dq.front().second<=j)
+                        {
+                            dq.pop_front();
+                        }
+                        ca=dq.front().first + (i-j)*sum;
+                        if(ca<=b)
+                        {
+                            ans=max(ans,i-j);
+                            i++;
+                            chk=false;
+                        }
+                    }
+                    
+            }
+            
+        }
+        return ans;
+    }
+};
