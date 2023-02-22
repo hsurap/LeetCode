@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int possible(vector<int>& a,int days,int w)
+    {
+        int cnt=1;
+        int sum=a[0];
+        for(int i=1;i<a.size();i++)
+        {
+            sum+=a[i];
+            if(sum>w)
+            {
+                cnt++;
+                sum=a[i];
+            }
+        }
+        return cnt<=days;
+    }
+    int shipWithinDays(vector<int>& a, int days) 
+    {
+        int mn=INT_MIN,sum=0;
+        for(auto i:a)
+        {
+            mn=max(mn,i);
+            sum+=i;
+        }
+        int mx=sum;
+        int ans;
+        while(mn<=mx)
+        {
+            int md=mn+(mx-mn)/2;
+            if(possible(a,days,md))
+            {
+                ans=md;
+                mx=md-1;
+            }
+            else
+                mn=md+1;
+        }
+        return ans;
+    }
+
+};
