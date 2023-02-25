@@ -1,0 +1,38 @@
+class Solution {
+public:
+    void func(vector<vector<int>>& image,vector<vector<int>>&ans,vector<vector<int>>&vis,int sr,int sc,int color,int val)
+    {
+        int n=ans.size();
+        int m=ans[0].size();
+        ans[sr][sc]=color;
+        vis[sr][sc]=1;
+        int dr[4]={-1,0,+1,0};
+        int dc[4]={0,+1,0,-1};
+        for(int i=0;i<4;i++)
+        {
+            int nr=sr+dr[i];
+            int nc=sc+dc[i];
+            if(nr>=0 && nr<n && nc>=0 && nc<m && vis[nr][nc]==0 && image[nr][nc]==val)
+            {
+               func(image,ans,vis,nr,nc,color,val) ;
+            }
+        }
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) 
+    {
+        int n=image.size();
+        int m=image[0].size();
+        vector<vector<int>>ans(n,vector<int>(m,0));
+        vector<vector<int>>vis(n,vector<int>(m,0));
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                ans[i][j]=image[i][j];
+            }
+        }
+        int val=image[sr][sc];
+        func(image,ans,vis,sr,sc,color,val);
+        return ans;
+    }
+};
