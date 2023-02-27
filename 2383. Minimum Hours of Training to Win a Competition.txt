@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int minNumberOfHours(int ieng, int iexp, vector<int>& energy, vector<int>& experience) 
+    {
+        int n=energy.size();
+        int ans=0;
+        for(int i=0;i<n;i++)
+        {
+            if(ieng>=energy[i]+1)
+            {
+                ieng-=energy[i];
+            }
+            else{
+                ans+=(energy[i]-ieng+1);
+                ieng=1;
+            }
+            if(iexp>experience[i]+1)
+            {
+                iexp+=experience[i];
+            }
+            else{
+                ans+=(experience[i]-iexp+1);
+                iexp+=(2*experience[i]-iexp+1);
+            }
+        }
+        return ans;
+    }
+};
