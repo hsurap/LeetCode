@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int countDigits(int num) {
+        unordered_map<int,int>map;
+        int no=num;
+        while(num>0)
+        {
+            int r=num%10;
+            num=num/10;
+            map[r]++;
+        
+        }
+        int ans=0;
+        for(auto i: map)
+        {
+            if(no%(i.first)==0)
+                ans+=i.second;
+        }
+        return ans;
+    }
+};
