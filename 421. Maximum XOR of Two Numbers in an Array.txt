@@ -1,0 +1,72 @@
+class trienode{
+    public:
+    trienode* children[2];
+    trienode()
+    {
+        for(int i=0;i<2;i++)
+        {
+            children[i]=NULL;
+        }
+    }
+};
+class Trie {
+public:
+    trienode*root;
+    Trie() {
+        root=new trienode();
+    }
+    
+    void insert(int no) 
+    {
+        trienode*node=root;
+        for(int i=31;i>=0;i--)
+        {
+            int bit=((no>>i)&1);
+            if(node->children[bit]==NULL)
+            {
+                node->children[bit]=new trienode();
+                node=node->children[bit];
+            }
+            else{
+                node=node->children[bit];
+            }
+        } 
+    }
+    
+    int  func(int no) 
+    {
+        trienode*node=root;
+        int ans=0;
+        for(int i=31;i>=0;i--)
+        {
+            int bit=((no>>i)&1);
+            if(node->children[1-bit]!=NULL)
+            {
+                ans=(ans|(1<<i));
+                node=node->children[1-bit];
+            }
+            else{
+                node=node->children[bit];
+            }
+        }
+        return ans;
+    }
+    
+};
+class Solution {
+public:
+    int findMaximumXOR(vector<int>& nums) 
+    {
+        Trie*tr=new Trie();
+        for(auto i:nums)
+        {
+            tr->insert(i);
+        }
+        int ans=0;
+        for(auto i:nums)
+        {
+            ans=max(ans,tr->func(i));
+        }
+        return ans;
+    }
+};
