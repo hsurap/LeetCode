@@ -1,0 +1,22 @@
+class Solution {
+public:
+    string replaceDigits(string s) 
+    {
+        string ans="";
+        int i=0;
+        while(i<s.size())
+        {
+            if(i%2==0)
+                ans=ans+s[i];
+            else
+            {
+                int no=s[i]-'0';
+                char ch=s[i-1]+no;
+                ans=ans+ch;
+            }
+            i++;
+                
+        }
+        return ans;
+    }
+};
