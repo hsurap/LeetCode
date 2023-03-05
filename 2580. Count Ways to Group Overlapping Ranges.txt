@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int m=1e9+7;
+    int countWays(vector<vector<int>>& a) 
+    {
+        sort(a.begin(),a.end());
+        long long int cnt=1;
+        long long int st=a[0][0];
+        long long int en=a[0][1];
+        for(int i=1;i<a.size();i++)
+        {
+            if(a[i][0]>en)
+            {
+                cnt++;
+                st=a[i][0];
+                en=a[i][1];
+            }
+            else{
+                st=min(st,(long long)(a[i][0]));
+                en=max(en,(long long)(a[i][1]));
+            }
+        }
+        long long int ans=1;
+        int p=2;
+        for(int i=1;i<=cnt;i++)
+        {
+            ans=((ans%m)*(p%m))%m;
+        }
+        return ans;
+    }
+};
