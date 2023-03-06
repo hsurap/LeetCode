@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int findKthPositive(vector<int>& a, int k) {
+        int i=0;
+        while(i<a.size())
+        {
+            if(i==0)
+            {
+                int no=a[i]-1;
+                if(k<=no)
+                    return k;
+                else
+                {
+                    k=k-no;
+                    i++;
+                }
+                    
+            }
+            else{
+                int no=a[i]-a[i-1]-1;
+                if(k<=no)
+                    return a[i-1]+k;
+                else
+                {
+                    k=k-no;
+                    i++;
+                }
+            }
+        }
+        return a[a.size()-1]+k;
+    }
+};
