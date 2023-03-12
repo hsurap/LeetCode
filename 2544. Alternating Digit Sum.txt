@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int alternateDigitSum(int n) 
+    {
+        string s=to_string(n);
+        int chk=1;
+        int i=0,sum=0;
+        //cout<<s<<" ";
+        while(i<s.size())
+        {
+            if(chk)
+                sum+=s[i]-'0';
+            else
+                sum-=s[i]-'0';
+            chk=1-chk;
+            i++;
+        }
+        return sum;
+    }
+};
