@@ -1,0 +1,33 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void func(TreeNode* root,int &ans,int no)
+    {
+        if(root==NULL)return ;
+        no=no*10+(root->val);
+        if(root->left==NULL  && root->right==NULL)
+        {
+            ans+=no;
+            return ;
+        }
+        
+        func(root->left,ans,no);
+        func(root->right,ans,no);
+        return ;
+    }
+    int sumNumbers(TreeNode* root) {
+        int ans=0;
+        func(root,ans,0);
+        return ans;
+    }
+};
