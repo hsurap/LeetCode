@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        stack<int>s;
+        for(auto x:asteroids)
+        {
+            if(x>0)s.push(x);
+            else{
+                
+                //condn1=> bigger negetive appear delete all smaller positive
+                while(!s.empty() && s.top()>0 && s.top()<abs(x))
+                {
+                    s.pop();
+                }
+                //condn2 => negetive element is already there
+                if(s.empty() || s.top()<0)
+                {
+                    s.push(x);
+                }
+                //condn3 => equal power of astroid appear again
+                else if(!s.empty() && s.top()+x==0)
+                {
+                    s.pop();
+                }
+            }
+        }
+        vector<int> ans;
+        while(!s.empty())
+        {
+            ans.push_back(s.top());
+            s.pop();
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
