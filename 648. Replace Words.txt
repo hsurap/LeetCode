@@ -1,0 +1,116 @@
+class trienode{
+    public:
+    trienode* children[26];
+    bool end;
+    trienode()
+    {
+        for(int i=0;i<26;i++)
+        {
+            children[i]=NULL;
+        }
+        end=false;
+    }
+};
+
+class Trie {
+public:
+    trienode*root;
+    Trie() {
+        root=new trienode();
+    }
+    
+    void insert(string word) 
+    {
+        trienode*node=root;
+        for(int i=0;i<word.size();i++)
+        {
+            if(node->children[word[i]-'a']==NULL)
+            {
+                node->children[word[i]-'a']=new trienode();
+                node=node->children[word[i]-'a'];
+            }
+            else{
+                node=node->children[word[i]-'a'];
+            }
+        }
+        node->end=true;
+    }
+    
+    pair<bool,string> search(string word) 
+    {
+        trienode*node=root;
+        string sm="";
+        for(int i=0;i<word.size();i++)
+        {
+            if(node->children[word[i]-'a']==NULL)
+            {
+                return {false,""};
+            }
+            else{
+                sm+=word[i];
+                node=node->children[word[i]-'a'];
+                if(node->end==true)
+                {
+                    return {true,sm};
+                }
+            }
+        }
+        return {false,""};
+    }
+    
+};
+
+class Solution {
+public:
+    
+    string replaceWords(vector<string>& dic, string sen) 
+    {
+        Trie*tr=new Trie();
+        for(auto i:dic)
+        {
+            tr->insert(i);
+        }
+        string ans="";
+        int i=0;
+        while(i<sen.size())
+        {
+            string sm="";
+            while(i<sen.size() && sen[i]!=' ')
+            {
+                sm=sm+sen[i];
+                i++;
+            }
+            if(sm.size()!=0)
+            {
+                pair<bool,string>a= tr->search(sm);
+                if(a.first==false)
+                {
+                    if(ans.size()==0)
+                    {
+                        ans+=sm;
+                    }
+                    else{
+                        string str=" "+sm;
+                        ans+=str;
+                    }
+                }
+                else{
+                    if(ans.size()==0)
+                    {
+                        ans+=a.second;
+                    }
+                    else{
+                        string str=" "+a.second;
+                        ans+=str;
+                    }
+                }
+                
+            }
+            while(i<sen.size() && sen[i]==' ')
+            {
+                i++;
+            }
+        }
+        return ans;
+    }
+};
