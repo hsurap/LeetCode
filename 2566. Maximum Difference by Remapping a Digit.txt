@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int minMaxDifference(int no) 
+    {
+        string s=to_string(no);
+        char d1='x';
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]!='9')
+            {
+                d1=s[i];
+                break;
+            }
+        }
+        char d2='x';
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]!='0')
+            {
+                d2=s[i];
+                break;
+            }
+        }
+        string s1=s,s2=s;
+        for(int i=0;i<s1.size();i++)
+        {
+            if(s1[i]==d1)
+                s1[i]='9';
+        }
+       // cout<<s1<<" ";
+        for(int i=0;i<s2.size();i++)
+        {
+            if(s2[i]==d2)
+                s2[i]='0';
+        }
+        //cout<<s1<<" ";
+        int ans=stoi(s1)-stoi(s2);
+        return ans;
+    }
+};
