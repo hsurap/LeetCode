@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int search(vector<int>& a, int key) 
+    {
+        int st=0,en=a.size()-1;
+        while(st<=en)
+        {
+            int m=(st+en)/2;
+            if(a[m]==key)
+                return m;
+            else if (a[m]>key)
+                en=m-1;
+            else
+                st=m+1;
+        }
+        return -1;
+    }
+};
