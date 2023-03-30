@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxCount(vector<int>& b, int n, int ms) 
+    {
+        unordered_map<int,int>map;
+        for(auto i:b)
+            map[i]=1;
+        int cnt=0;
+        long long int s=0;
+        for(int i=1;i<=n;i++)
+        {
+            if(map.count(i))continue;
+            s+=i;
+            if(s<=ms)cnt++;
+            else break;
+        }
+        return cnt;
+    }
+};
