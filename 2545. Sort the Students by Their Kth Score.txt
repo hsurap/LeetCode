@@ -1,0 +1,20 @@
+class Solution {
+public:
+    static bool cmp(vector<int>&v1,vector<int>&v2)
+    {
+        return v1[0]>v2[0];
+    }
+    vector<vector<int>> sortTheStudents(vector<vector<int>>& a, int k) 
+    {
+        for(int i=0;i<a.size();i++)
+        {
+            swap(a[i][0],a[i][k]);
+        }
+        sort(a.begin(),a.end(),cmp);
+        for(int i=0;i<a.size();i++)
+        {
+            swap(a[i][0],a[i][k]);
+        }
+        return a;
+    }
+};
