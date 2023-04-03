@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<int>func(int left,int right)
+    {
+        vector<bool>p(1e6+1,true);
+        for(int i=2;i<=sqrt(1e6+1);i++)
+        {
+            if(p[i]==false)continue;
+            for(int j=2*i;j<=1e6+1;j=j+i)
+            {
+                p[j]=false;
+            }
+        }
+        vector<int>prime;
+        for(int i=max(2,left);i<=right;i++)
+        {
+            if(p[i]==true)
+                prime.push_back(i);
+        }
+        return prime;
+    }
+    vector<int> closestPrimes(int left, int right)
+    {
+        vector<int>prime=func(left,right);
+        if(prime.size()<=1)return {-1,-1};
+        int st=-1,en=-1,d=INT_MAX;
+        for(int i=1;i<prime.size();i++)
+        {
+            if(prime[i]-prime[i-1]<d)
+            {
+                d=prime[i]-prime[i-1];
+                st=prime[i-1];
+                en=prime[i];
+            }
+        }
+        return {st,en};
+        
+    }
+};
