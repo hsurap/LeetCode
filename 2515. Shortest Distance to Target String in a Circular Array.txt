@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int closetTarget(vector<string>& words, string target, int si) 
+    {
+        int ans=101,cnt=0;
+        for(int i=si;i<words.size();i++)
+        {
+            if(words[i]==target)
+            {
+                ans=min(ans,cnt);
+                break;
+            }
+            cnt++;
+            
+        }
+        for(int i=0;i<si;i++)
+        {
+            if(words[i]==target)
+            {
+                ans=min(ans,cnt);
+                break;
+            }
+            cnt++;
+        }
+        cnt=1;
+        for(int i=si-1;i>=0;i--)
+        {
+            if(words[i]==target)
+            {
+                ans=min(ans,cnt);
+                break;
+            }
+            cnt++;
+        }
+        for(int i=words.size()-1;i>si;i--)
+        {
+            if(words[i]==target)
+            {
+                ans=min(ans,cnt);
+                break;
+            }
+            cnt++;
+        }
+        if(ans>100)return -1;
+        return ans;
+    }
+};
