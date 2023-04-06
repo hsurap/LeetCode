@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int minimumPartition(string s, int k) 
+    {
+        int cnt=0;
+        int i=0;
+        long long no=(long long)k;
+        long long cn=0;
+        while(i<s.size())
+        {
+            cn=cn*10+(s[i]-'0');
+            if(cn>no)
+            {
+                cnt++;
+                cn=(s[i]-'0');
+                if(cn>no)
+                    return -1;
+                i++;
+            }
+            else
+                i++;
+        }
+        return cnt+1;
+    }
+};
