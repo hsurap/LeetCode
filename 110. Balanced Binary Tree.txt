@@ -1,0 +1,35 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int func(TreeNode* root,bool &chk)
+    {
+        if(root==NULL)
+            return 0;
+        int l=func(root->left,chk);
+        int r=func(root->right,chk);
+        if(chk==false)
+            return max(l,r)+1;
+        if(chk && abs(l-r)<=1)
+        {
+             return max(l,r)+1;
+        }
+        chk=false;
+        return max(l,r)+1;
+    }
+    bool isBalanced(TreeNode* root) 
+    {
+        bool chk=true;
+        func(root,chk);
+        return chk;
+    }
+};
