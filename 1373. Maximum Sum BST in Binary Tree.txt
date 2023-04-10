@@ -1,0 +1,37 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    pair<pair<int,int>,pair<bool,int>>func(TreeNode* root,int &ans)
+    {
+        if(root==NULL)
+            return {{INT_MAX,INT_MIN},{true,0}};
+        pair<pair<int,int>,pair<int,int>>la=func(root->left,ans);
+        pair<pair<int,int>,pair<int,int>>ra=func(root->right,ans);
+        int nmin=min({la.first.first,ra.first.first,root->val});
+        int nmax=max({la.first.second,ra.first.second,root->val});
+        int nsum=la.second.second+ra.second.second+root->val;
+        bool chk=false;
+        if(la.second.first && ra.second.first && root->val > la.first.second && root->val < ra.first.first)
+        {
+            chk=true;
+            ans=max(ans,nsum);
+        }
+        return {{nmin,nmax},{chk,nsum}};
+    }
+    int maxSumBST(TreeNode* root) 
+    {
+        int ans=0;
+        func(root,ans);
+        return ans;
+    }
+};
