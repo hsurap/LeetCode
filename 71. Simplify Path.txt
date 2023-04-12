@@ -1,0 +1,35 @@
+class Solution {
+public:
+    string simplifyPath(string s) 
+    {
+        stack<string>st;
+        int i=0;
+        while(i<s.size())
+        {
+            string sm="";
+            while(i<s.size() && s[i]!='/')
+            {
+                sm+=s[i];
+                i++;
+            }
+            i++;
+            if(sm=="..")
+            {
+                if(st.size()>0)
+                    st.pop();
+            }
+            else if(sm!="." && sm.size()>0)
+                st.push(sm);
+        }
+        string ans="";
+        while(st.size()!=0)
+        {
+            ans="/" + st.top()+ans;
+            //cout<<st.top()<<" ";
+            st.pop();
+        }
+        if(ans.size()==0)ans="/";
+        return ans;
+        
+    }
+};
