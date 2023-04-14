@@ -1,0 +1,29 @@
+class Solution {
+public:
+void func(vector<vector<int>>& adj,int curr,vector<int>&vis)
+    {
+        vis[curr]=true;
+        for(int i=0;i<adj[0].size();i++)
+        {
+            if(i!=curr && vis[i]==0 && adj[curr][i]==1)
+            {
+                func(adj,i,vis);
+            }
+        }
+    }
+    int findCircleNum(vector<vector<int>>& adj)
+    {
+        int n=adj.size();
+        vector<int>vis(n,0);
+        int cnt=0;
+        for(int i=0;i<n;i++)
+        {
+            if(vis[i]==0)
+            {
+                cnt++;
+                func(adj,i,vis);
+            }
+        }
+        return cnt;
+    }
+};
