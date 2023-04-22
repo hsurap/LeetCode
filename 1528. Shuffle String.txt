@@ -1,0 +1,17 @@
+class Solution {
+public:
+    string restoreString(string s, vector<int>& no) 
+    {
+        char ch[s.size()];
+        for(int i=0;i<s.size();i++)
+        {
+            ch[no[i]]=s[i];
+        }
+        string ans;
+        for(int i=0;i<s.size();i++)
+        {
+            ans+=ch[i];
+        }
+        return ans;
+    }
+};
