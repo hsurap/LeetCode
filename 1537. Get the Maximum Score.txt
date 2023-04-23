@@ -1,0 +1,61 @@
+class Solution 
+{
+public:
+    int maxSum(vector<int>& nums1, vector<int>& nums2)
+    {
+        long long int n1 = nums1.size();
+        long long int n2 = nums2.size();
+        long long int sum1=0;
+        long long int sum2=0;
+        long long int sumf=0;
+        long long int i=0;
+        long long int j=0;
+        constexpr int Mod = 1e9 + 7;
+        while(i<n1 && j<n2){
+            if(nums1[i]!=nums2[j]){
+                if(nums1[i]<nums2[j]){
+                    sum1 = sum1 + nums1[i];
+                    i++;
+                }
+                else{
+                    sum2 = sum2 + nums2[j];
+                    j++;
+                }
+            }
+            else{
+                sum1 = sum1 + nums1[i];
+                sum2 = sum2 + nums2[j];
+                if(sum1>sum2){
+                    sumf = sumf + sum1;
+                    sum1=0;
+                    sum2=0;
+                    i++;
+                    j++;
+                }
+                else{
+                    sumf = sumf + sum2;
+                    sum1=0;
+                    sum2=0;
+                    i++;
+                    j++;
+                }
+            }
+        }
+
+            while(i<n1){
+                sum1 = sum1 + nums1[i];
+                i++;
+            }
+            while(j<n2){
+                sum2 = sum2 + nums2[j];
+                j++;
+            }
+            if(sum1>sum2){
+                sumf += sum1;
+            }
+            else{
+                sumf += sum2;
+            }
+        return sumf%Mod;
+    }
+};
