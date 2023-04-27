@@ -1,0 +1,35 @@
+class Solution {
+public:
+    bool palindrome(string& s,int i, int j)
+    {
+        //int i=0,j=s.size()-1;
+        while(i<=j)
+        {
+            if(s[i]!=s[j])return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    int minCut(string s) {
+        vector<int>dp(s.size()+1,0);
+        int n=s.size();
+        for(int i=n-1;i>=0;i--)
+        {
+            int mini=INT_MAX;
+            string word="";
+            for(int k=i;k<s.size();k++)
+            {
+                //word=word+s[k];
+                if(palindrome(s,i,k))
+                {
+                    int ca=1+dp[k+1];
+                    mini=min(mini,ca);
+                }
+            }
+            dp[i]=mini;
+        }
+        return dp[0]-1;
+    }
+};
