@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int bagOfTokensScore(vector<int>& t, int p) 
+    {
+        int s=0;
+        int i=0,j=t.size()-1;
+        sort(t.begin(),t.end());
+        while(i<=j)
+        {
+            if(p>=t[i])
+            {
+                s++;
+                p=p-t[i];
+                i++;
+            }
+            else if(s>0 && i!=j)
+            {
+                s--;
+                p=p+t[j];
+                j--;
+            }
+            else
+                break;
+        }
+        return s;
+        
+    }
+};
