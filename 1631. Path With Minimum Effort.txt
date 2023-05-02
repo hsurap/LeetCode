@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int minimumEffortPath(vector<vector<int>>& a) 
+    {
+        int n=a.size();
+        int m=a[0].size();
+        vector<vector<int>>dis(n,vector<int>(m,1e9));
+        dis[0][0]=0;
+        queue<pair<int,int>>q;
+        q.push({0,0});
+        while(q.size()!=0)
+        {
+            auto f=q.front();
+            q.pop();
+            int r=f.first,c=f.second;
+            int dr[]={-1,0,+1,0};
+            int dc[]={0,+1,0,-1};
+            for(int k=0;k<4;k++)
+            {
+                int nr=r+dr[k];
+                int nc=c+dc[k];
+                if(nr>=0 && nc>=0 && nr<n && nc<m)
+                {
+                    int dif=max(dis[r][c],abs(a[nr][nc]-a[r][c]));
+                    if(dif<dis[nr][nc])
+                    {
+                        dis[nr][nc]=dif;
+                        q.push({nr,nc});
+                    }
+                }
+            }
+        }
+        return dis[n-1][m-1];
+    }
+};
