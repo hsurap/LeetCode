@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int differenceOfSum(vector<int>& a)
+    {
+        long long s1=0;
+        for(auto i:a)
+            s1+=i;
+        long long s2=0;
+        for(auto no:a)
+        {
+            while(no>0)
+            {
+                s2+=(no%10);
+                no=no/10;
+            }
+        }
+        return s1-s2;
+    }
+};
