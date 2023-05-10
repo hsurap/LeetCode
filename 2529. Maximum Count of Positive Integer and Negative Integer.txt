@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int maximumCount(vector<int>& a) 
+    {
+        int i=0;
+        int n=0,p=0;
+        while(i<a.size())
+        {
+            if(a[i]<0)
+                n++;
+            if(a[i]>0)
+                p++;
+            i++;
+        }
+        return max(n,p);
+    }
+};
