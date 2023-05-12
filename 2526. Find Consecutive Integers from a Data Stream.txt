@@ -1,0 +1,31 @@
+class DataStream {
+public:
+    int count;
+    int no;
+    int p;
+    DataStream(int value, int k) 
+    {
+        count=0;
+        no=value;
+        p=k;
+    }
+    
+    bool consec(int num) 
+    {
+        if(p==1 && num==no)return true;
+        if(num==no)
+        {
+            count++;
+        }
+        else
+            count=0;
+        if(count>=p)return true;
+        return false;
+    }
+};
+
+/**
+ * Your DataStream object will be instantiated and called as such:
+ * DataStream* obj = new DataStream(value, k);
+ * bool param_1 = obj->consec(num);
+ */
