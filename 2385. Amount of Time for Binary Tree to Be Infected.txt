@@ -1,0 +1,71 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void make_adjlist(TreeNode* root,unordered_map<int,vector<int>>&map)
+    {
+        if(root==NULL )return;
+        if(root->left!=NULL)
+        {
+            map[root->val].push_back(root->left->val);
+            map[root->left->val].push_back(root->val);
+            make_adjlist(root->left,map);
+        }
+        if(root->right!=NULL)
+        {
+            map[root->val].push_back(root->right->val);
+            map[root->right->val].push_back(root->val);
+            make_adjlist(root->right,map);
+        }
+        return ;
+    }
+    
+    int bfs(unordered_map<int,vector<int>>&map,int st)
+    {
+        unordered_map<int,bool>vis;
+        for(auto i:map)
+            vis[i.first]=false;
+        vis[st]=true;
+        int time=0;
+        queue<int>q;
+        q.push(st);
+        q.push(-1);
+        while(q.size()!=0)
+        {
+            int f=q.front();
+            q.pop();
+            if(f==-1){
+                time++;
+                 if(q.size()!=0)
+                    q.push(-1);
+                continue;
+            }
+            for(auto j:map[f])
+            {
+                if(vis[j]==false)
+                {
+                    vis[j]=true;
+                    q.push(j);
+                }
+            }
+           
+        }
+        return time;
+    }
+    int amountOfTime(TreeNode* root, int start) {
+        unordered_map<int,vector<int>>map;
+        make_adjlist(root,map);
+        int ans=bfs(map,start);
+        return ans-1;
+        // return 1;
+    }
+};
