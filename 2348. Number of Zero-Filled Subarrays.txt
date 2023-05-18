@@ -1,0 +1,21 @@
+class Solution {
+public:
+    long long zeroFilledSubarray(vector<int>& a) 
+    {
+        int n=a.size();
+        long long int ans=0,cc=0;
+        for(int i=0;i<n;i++)
+        {
+            if(a[i]==0)
+            {
+                cc++;
+            }
+            else{
+                ans+=(((cc)*(cc+1))/2);
+                cc=0;
+            }
+        }
+        ans+=(((cc)*(cc+1))/2);
+        return ans;
+    }
+};
