@@ -1,0 +1,52 @@
+class Solution {
+public:
+    int dr[4]={-1,0,1,0};
+    int dc[4]={0,1,0,-1};
+    void func(vector<vector<int>>& a,int sr,int sc,int er,int ec,int rc,int cc,vector<vector<int>>&vis,int &ans)
+    {
+        // cout<<sr<<" "<<sc<<" "<<cc<<" "<<endl;
+        int n=a.size();
+        int m=a[0].size();
+        if(sr==er && sc==ec)
+        {
+            if(cc-1==rc)
+                ans++;
+            return ;
+        }
+        if(sr<0 || sr>=n || sc<0 || sc>=m || vis[sr][sc]==1 || a[sr][sc]==-1)return ;
+        vis[sr][sc]=1;
+        for(int i=0;i<4;i++)
+        {
+            func(a,sr+dr[i],sc+dc[i],er,ec,rc,cc+1,vis,ans);
+        }
+        vis[sr][sc]=0;
+        return ;
+    }
+    int uniquePathsIII(vector<vector<int>>& a) 
+    {
+        int str,stc,enr,enc,count=0;
+        int n=a.size();
+        int m=a[0].size();
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(a[i][j]==1)
+                {
+                    str=i;
+                    stc=j;
+                }
+                if(a[i][j]==2)
+                {
+                    enr=i;
+                    enc=j;
+                }
+                if(a[i][j]==0)count++;
+            }
+        }
+        vector<vector<int>>vis(n,vector<int>(m,0));
+        int ans=0;
+        func(a,str,stc,enr,enc,count,0,vis,ans);
+        return ans;
+    }
+};
