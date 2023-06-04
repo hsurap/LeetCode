@@ -1,0 +1,77 @@
+class trienode{
+    public:
+    char data;
+    trienode* children[26];
+    int val;
+    trienode(char ch)
+    {
+        data=ch;
+        for(int i=0;i<26;i++)
+        {
+            children[i]=NULL;
+        }
+        val=0;
+    }
+};
+class MapSum {
+public:
+    trienode*root;
+    unordered_map<string,int>map;
+    MapSum() {
+        root=new trienode(NULL);
+    }
+    
+    void insert(string word, int v) 
+    {
+        trienode*node=root;
+        if(map.count(word))
+        {
+            for(int i=0;i<word.size();i++)
+            {
+                node=node->children[word[i]-'a'];
+                node->val=node->val+v-map[word];
+            }
+            map[word]=v;
+        }
+        else{
+            for(int i=0;i<word.size();i++)
+            {
+                if(node->children[word[i]-'a']==NULL)
+                {
+                    node->children[word[i]-'a']=new trienode(word[i]);
+                    node=node->children[word[i]-'a'];
+                    node->val=v;
+                }
+                else{
+                    node=node->children[word[i]-'a'];
+                    node->val=node->val+v;
+                }
+            }
+            map[word]=v;
+        }
+        
+    }
+    
+    int sum(string word) 
+    {
+        trienode*node=root;
+        for(int i=0;i<word.size();i++)
+        {
+            if(node->children[word[i]-'a']==NULL)
+            {
+                return 0;
+            }
+            else{
+                node=node->children[word[i]-'a'];
+            }
+        }
+        return node->val;
+    }
+};
+
+/**
+ * Your MapSum object will be instantiated and called as such:
+ * MapSum* obj = new MapSum();
+ * obj->insert(key,val);
+ * int param_2 = obj->sum(prefix);
+ */
