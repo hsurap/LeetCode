@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int func(vector<vector<int>>& p,int i,int last,vector<vector<int>>&dp)
+    {
+        if(i<0)return 0;
+        if(dp[i][last]!=-1)return dp[i][last];
+        int c1=func(p,i-1,last,dp);
+        int c2=0;
+        if(last==p.size() || p[i][1]<p[last][0])
+        {
+            c2=1+func(p,i-1,i,dp);
+        }
+        return dp[i][last]= max(c1,c2);
+    }
+    int findLongestChain(vector<vector<int>>& p) {
+        sort(p.begin(),p.end());
+        vector<vector<int>>dp(p.size()+1,vector<int>(p.size()+1,0));
+        int n=p.size();
+        for(int i=1;i<=n;i++)
+        {
+            for(int last=0;last<=n;last++)
+            {
+                int c1=dp[i-1][last];
+                int c2=0;
+                if(last==p.size() || p[i-1][1]<p[last][0])
+                    c2=1+dp[i-1][i];
+                dp[i][last]=max(c1,c2);
+            }
+        }
+        return dp[n][n];
+    }
+};
