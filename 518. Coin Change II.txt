@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int func(int t, vector<int>& a,int i,vector<vector<int>>&dp)
+    {
+        if(t==0)return 1;
+        if(i==0)
+        {
+            if(t%a[0]==0)return 1;
+            return -1;
+        }
+        if(dp[i][t]!=-1)return dp[i][t];
+        int c1=func(t,a,i-1,dp);
+        int c2=-1;
+        if(a[i]<=t)
+            c2=func(t-a[i],a,i,dp);
+        int ans=0;
+        if(c1>0)ans+=c1;
+        if(c2>0)ans+=c2;
+        return dp[i][t]= ans;
+
+    }
+    int change(int t, vector<int>& a) {
+        vector<vector<int>>dp(a.size(),vector<int>(t+1,-1));
+        int ans= func(t,a,a.size()-1,dp);
+
+        if(ans<0)return 0;
+        else return ans;
+    }
+};
