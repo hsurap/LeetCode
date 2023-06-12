@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<string> summaryRanges(vector<int>& a) 
+    {
+        vector<string>ans;
+        if(a.size()<=0)return {};
+        if(a.size()==1)return {to_string(a[0])};
+        int i=0,j=1;
+        while(j<a.size())
+        {
+            if(a[j]==a[j-1]+1)
+                j++;
+            else{
+                if(a[i]==a[j-1])
+                    ans.push_back(to_string(a[i]));
+                else{
+                    string s=to_string(a[i])+"->"+to_string(a[j-1]);
+                    ans.push_back(s);
+                }
+                i=j;
+                j=i+1;
+            }
+        }
+        if(a[i]==a[j-1])
+            ans.push_back(to_string(a[i]));
+        else{
+            string s=to_string(a[i])+"->"+to_string(a[j-1]);
+            ans.push_back(s);
+        }
+        
+        return ans;
+    }
+};
