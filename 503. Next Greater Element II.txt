@@ -1,0 +1,48 @@
+class Solution {
+public:
+    vector<int> nextGreaterElements(vector<int>& a) 
+    {
+        stack<int>st;
+        st.push(a[a.size()-1]);
+        for(int i=a.size()-2;i>=0;i--)
+        {
+            if(st.size()==0)
+                st.push(a[i]);
+            else if(a[i]<st.top())
+                st.push(a[i]);
+            else{
+                while(st.size()!=0 && st.top()<=a[i])
+                    st.pop();
+                st.push(a[i]);
+            }
+        }
+        vector<int>ans(a.size(),-1);
+        int j=a.size()-1;
+        for(int i=a.size()-1;i>=0;i--)
+        {
+            if(st.size()==0)
+            {
+                st.push(a[i]);
+                ans[j--]=-1;
+            }
+            else if(a[i]<st.top())
+            {
+                
+                ans[j--]=st.top();
+                st.push(a[i]);
+            }
+            else{
+                while(st.size()!=0 && st.top()<=a[i])
+                    st.pop();
+                if(st.size()==0)
+                {
+                    ans[j--]=-1;
+                }
+                else
+                    ans[j--]=st.top();
+                st.push(a[i]);
+            }
+        }
+        return ans;
+    }
+};
