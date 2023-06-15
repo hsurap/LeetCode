@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& v1, vector<int>& v2) 
+    {
+        unordered_map<int,int>map;
+        vector<int>ans;
+        if(v2.size()==0 || v1.size()==0)return ans;
+        
+        int n1=v1.size(),n2=v2.size();
+        stack<int>st;
+        st.push(v2[n2-1]);
+        map[v2[n2-1]]=-1;
+        for(int i=n2-2;i>=0;i--)
+        {
+            while(st.size()!=0 && v2[i]>=st.top())
+                st.pop();
+            if(st.size()==0)
+            {
+                map[v2[i]]=-1;
+                st.push(v2[i]);
+            }
+            else{
+                map[v2[i]]=st.top();
+                st.push(v2[i]);
+            }
+        }
+        for(int i=0;i<n1;i++)
+        {
+            ans.push_back(map[v1[i]]);
+        }
+        return ans;
+    }
+};
