@@ -1,0 +1,7 @@
+class Solution {
+public:
+    int poorPigs(int b, int m, int p) {
+         int t = p/m+1;
+        return (int)ceil(log(b)/log(t));
+    }
+};
