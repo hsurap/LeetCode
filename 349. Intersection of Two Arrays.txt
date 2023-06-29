@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int> intersection(vector<int>& num1, vector<int>& num2) 
+    {
+        vector<int>ans;
+        unordered_map<int,int>mymap;
+        for(int i=0;i<num1.size();i++)
+        {
+            mymap[num1[i]]++;
+        }
+        for(int i=0;i<num2.size();i++)
+        {
+            if(mymap.count(num2[i])>0)
+                ans.push_back(num2[i]);
+            mymap.erase(num2[i]);
+        }
+        return ans;
+    }
+};
