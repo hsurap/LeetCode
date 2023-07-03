@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int V) 
+    {
+        int M=coins.size();
+        vector<vector<int>>dp(M,vector<int>(V+1));
+	    for(int i=0;i<M;i++)
+	        dp[i][0]=0;
+	    for(int t=0;t<=V;t++)
+	    {
+	        if(t%coins[0]==0)
+	            dp[0][t]=t/coins[0];
+	        else
+	            dp[0][t]=10000000;
+	    }
+	    for(int i=1;i<M;i++)
+	    {
+	        for(int t=1;t<=V;t++)
+	        {
+	            int c1=10000000;
+        	    if(coins[i]<=t)
+        	        c1=dp[i][t-coins[i]]+1;
+        	    int c2=dp[i-1][t];
+        	    dp[i][t]=min(c1,c2);
+	        }
+	    }
+	    int ans=dp[M-1][V];
+	   // int ans=func(coins,V,M-1,dp);
+	    if(ans>=10000000)return -1;
+	    return ans;
+    }
+};
