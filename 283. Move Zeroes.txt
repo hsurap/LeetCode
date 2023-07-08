@@ -1,0 +1,18 @@
+class Solution {
+public:
+    void moveZeroes(vector<int>& a) 
+    {
+        if(a.size()==0 || a.size()==1)
+            return;
+        int zero=0;
+        int i=0;
+        while(i<a.size())
+        {
+            if(a[i]==0)
+                i++;
+            else{
+                swap(a[zero++],a[i++]);
+            }
+        }
+    }
+};
