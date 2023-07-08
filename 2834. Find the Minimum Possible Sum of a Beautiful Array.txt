@@ -1,0 +1,25 @@
+class Solution {
+public:
+    long long minimumPossibleSum(int n, int t) {
+        long long int st=1,en=t-1;
+        long long ans=0;
+        while(st<=en && n>0)
+        {
+            ans+=st;
+            cout<<st<<" ";
+            st++;
+            en--;
+            n--;
+        }
+        en=t;
+        while(n>0)
+        {
+            ans+=en;
+            n--;
+            cout<<en<<" ";
+            en++;
+        }
+        return ans;
+        
+    }
+};
