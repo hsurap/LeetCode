@@ -1,0 +1,77 @@
+class trienode{
+    public:
+    trienode* children[26];
+    bool end;
+    trienode()
+    {
+        for(int i=0;i<26;i++)
+        {
+            children[i]=NULL;
+        }
+        end=false;
+    }
+};
+
+bool func(string word,trienode*node)
+{
+    if(word.size()==0)return node->end==true;
+    if(word[0]!='.')
+    {
+        if(node->children[word[0]-'a']==NULL)
+        {
+            return false;
+        }
+        else{
+            return func(word.substr(1),node->children[word[0]-'a']);
+        }
+    }
+    else{
+        for(int i=0;i<26;i++)
+        {
+            if(node->children[i]!=NULL)
+            {
+                if(func(word.substr(1),node->children[i]))
+                    return true;
+            }
+                
+        }
+        return false;
+    }
+}
+
+class WordDictionary {
+public:
+    /** Initialize your data structure here. */
+    trienode*root;
+    WordDictionary() {
+        root=new trienode();
+    }
+    
+    void addWord(string word) 
+    {
+        trienode*node=root;
+        for(int i=0;i<word.size();i++)
+        {
+            if(node->children[word[i]-'a']==NULL)
+            {
+                node->children[word[i]-'a']=new trienode();
+                node=node->children[word[i]-'a'];
+            }
+            else{
+                node=node->children[word[i]-'a'];
+            }
+        }
+        node->end=true;
+    }
+    
+    bool search(string word) {
+        return func(word,root);
+    }
+};
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary* obj = new WordDictionary();
+ * obj->addWord(word);
+ * bool param_2 = obj->search(word);
+ */
