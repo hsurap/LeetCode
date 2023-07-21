@@ -1,0 +1,79 @@
+class trienode{
+    public:
+    char data;
+    trienode* children[26];
+    bool end;
+    trienode(char ch)
+    {
+        data=ch;
+        for(int i=0;i<26;i++)
+        {
+            children[i]=NULL;
+        }
+        end=false;
+    }
+};
+class Trie {
+public:
+    trienode*root;
+    Trie() {
+        root=new trienode(NULL);
+    }
+    
+    void insert(string word) 
+    {
+        trienode*node=root;
+        for(int i=0;i<word.size();i++)
+        {
+            if(node->children[word[i]-'a']==NULL)
+            {
+                node->children[word[i]-'a']=new trienode(word[i]);
+                node=node->children[word[i]-'a'];
+            }
+            else{
+                node=node->children[word[i]-'a'];
+            }
+        }
+        node->end=true;
+    }
+    
+    bool search(string word) 
+    {
+        trienode*node=root;
+        for(int i=0;i<word.size();i++)
+        {
+            if(node->children[word[i]-'a']==NULL)
+            {
+                return false;
+            }
+            else{
+                node=node->children[word[i]-'a'];
+            }
+        }
+        return node->end==true;
+    }
+    
+    bool startsWith(string word) 
+    {
+        trienode*node=root;
+        for(int i=0;i<word.size();i++)
+        {
+            if(node->children[word[i]-'a']==NULL)
+            {
+                return false;
+            }
+            else{
+                node=node->children[word[i]-'a'];
+            }
+        }
+        return true;
+    }
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
