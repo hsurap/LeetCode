@@ -1,0 +1,109 @@
+class node
+{
+    public:
+    pair<int,int>data;
+    node*prev;
+    node*next;
+    node(pair<int,int>d)
+    {
+        data.first=d.first;
+        data.second=d.second;
+        prev=NULL;
+        next=NULL;
+    }
+};
+
+void remove (node*&cn)
+{
+    node*a=cn->prev;
+    node*b=cn->next;
+    a->next=b;
+    b->prev=a;
+    cn->next=NULL;
+    cn->prev=NULL;
+    delete cn;
+    return ;
+}
+
+node* add(node*&tail,int key,int value)
+{
+    node*nn=new node({key,value});
+    node*a=tail->prev;
+    nn->prev=a;
+    nn->next=tail;
+    tail->prev=nn;
+    a->next=nn;
+    return nn;
+}
+
+int remove_lru(node*&head)
+{
+    node*a=head->next;
+    head->next=a->next;
+    a->next->prev=head;
+    a->next=NULL;
+    a->prev=NULL;
+    int no=a->data.first;
+    delete a;
+    return no;
+}
+
+class LRUCache {
+public:
+    node*head;
+    node*tail;
+    unordered_map<int,node*>map;
+    int size;
+    int cap;
+    LRUCache(int capacity) 
+    {
+        size=0;
+        cap=capacity;
+        head=new node({-1,-1});
+        tail=new node({-1,-1});
+        head->next=tail;
+        tail->prev=head;
+    }
+    
+    int get(int key) 
+    {
+        if(map.count(key)==0)return -1;
+        node*cn=map[key];
+        int ans=cn->data.second;
+        remove(cn);
+        node*ncn=add(tail,key,ans);
+        map[key]=ncn;
+        return ans;
+    }
+    
+    void put(int key, int value) {
+        if(map.count(key))
+        {
+            node*cn=map[key];
+            remove(cn);
+            node*ncn=add(tail,key,value);
+            map[key]=ncn;
+        }
+        else{
+            if(size<cap)
+            {
+                node*ncn=add(tail,key,value);
+                map[key]=ncn;
+                size++;
+            }
+            else{
+                int k=remove_lru(head);
+                map.erase(k);
+                node*ncn=add(tail,key,value);
+                map[key]=ncn;
+            }
+        }
+    }
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
