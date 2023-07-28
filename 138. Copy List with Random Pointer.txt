@@ -1,0 +1,70 @@
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+    
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+*/
+
+class Solution {
+public:
+    Node* func(Node* head,unordered_map<Node*,Node*>&map1,unordered_map<Node*,Node*>&map2,unordered_map<Node*,Node*>&map3)
+    {
+        Node*temp=head;
+        Node*newhead=NULL,*newtail=NULL;
+        while(temp!=NULL)
+        {
+            if(newhead==NULL)
+            {
+                Node*newnode=new Node(temp->val);
+                newhead=newnode;
+                newtail=newnode;
+                map1[temp]=newnode;
+                map2[newnode]=temp;
+                map3[temp]=temp->random; 
+            }
+            else{
+                Node*newnode=new Node(temp->val);
+                newtail->next=newnode;
+                newtail=newtail->next;
+                map1[temp]=newnode;
+                map2[newnode]=temp;
+                map3[temp]=temp->random; 
+            }
+            temp=temp->next;
+            
+        }
+        return newhead;
+    }
+    Node* copyRandomList(Node* head) 
+    {
+        unordered_map<Node*,Node*>map1;
+        unordered_map<Node*,Node*>map2;
+        unordered_map<Node*,Node*>map3;
+        Node*ans=func(head,map1,map2,map3);
+        Node*temp=ans;
+        while(temp!=NULL)
+        {
+            Node*a=map2[temp];
+            Node*b=map3[a];
+            if(b==NULL)
+                temp->random=NULL;
+            else
+            {
+                Node*c=map1[b];
+                temp->random=c;
+            }
+            temp=temp->next;
+            
+        }
+        return ans;
+    }
+};
