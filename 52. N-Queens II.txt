@@ -1,0 +1,64 @@
+class Solution {
+public:
+bool check(vector<vector<int>>&v,int row,int col)
+    {
+        for(int i=0;i<v.size();i++)
+        {
+            if(v[row][i]==1)return false;
+            if(v[i][col]==1)return false;
+        }
+        int i=row,j=col;
+        while(i>=0 && j>=0)
+        {
+            if(v[i][j]==1)return false;
+            i--;j--;
+        }
+        i=row;j=col;
+        while(i>=0 && j<v.size())
+        {
+            if(v[i][j]==1)return false;
+            i--;j++;
+        }
+        return true;
+    }
+    void func(vector<vector<string>>&ans,int count,vector<vector<int>>&v,int n,int row,int col)
+    {
+        if(row==n && count!=n)return ;
+        if(count==n)
+        {
+            vector<string>sv;
+            for(int i=0;i<n;i++)
+            { 
+                string ss="";
+                for(int j=0;j<n;j++)
+                {
+                    if(v[i][j]==0)
+                        ss=ss+".";
+                    else
+                        ss=ss+"Q";
+                }
+                sv.push_back(ss);
+            }
+            ans.push_back(sv);
+            return ;
+        }
+        for(int i=0;i<n;i++)
+        {
+            if(check(v,row,i))
+            {
+                v[row][i]=1;
+                func(ans,count+1,v,n,row+1,0);
+                v[row][i]=0;
+            }
+        }
+        return ;
+
+    }
+    int totalNQueens(int n) {
+        vector<vector<int>>v(n,vector<int>(n,0));
+        vector<vector<string>>ans;
+        int count=0;
+        func(ans,0,v,n,0,0);
+        return ans.size();
+    }
+};
