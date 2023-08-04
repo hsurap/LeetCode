@@ -1,0 +1,22 @@
+class Solution {
+public:
+    long long maxArrayValue(vector<int>& a) {
+        long long ans=a[a.size()-1];
+        long long lastsum=a[a.size()-1];
+        int i=a.size()-2;
+        while(i>=0)
+        {
+            ans=max(ans,lastsum);
+            if(lastsum>=a[i])
+            {
+                lastsum+=a[i];
+            }
+            else{
+                lastsum=a[i];
+            }
+            i--;
+        }
+        ans=max(ans,lastsum);
+        return ans;
+    }
+};
