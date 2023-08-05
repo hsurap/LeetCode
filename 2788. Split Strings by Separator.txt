@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<string> splitWordsBySeparator(vector<string>& a, char sp) {
+        vector<string>ans;
+        for(auto i:a)
+        {
+            string s=i;
+            string str="";
+            for(int j=0;j<s.size();j++)
+            {
+                if(s[j]==sp)
+                {
+                    if(str.size()>0)
+                        ans.push_back(str);
+                    str="";
+                }
+                else
+                    str+=s[j];
+            }
+            if(str.size()>0)
+                ans.push_back(str);
+        }
+        return ans;
+        
+    }
+};
