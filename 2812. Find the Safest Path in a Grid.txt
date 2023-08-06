@@ -1,0 +1,88 @@
+class Solution {
+public:
+    int maximumSafenessFactor(vector<vector<int>>& a) 
+    {
+        int n=a.size();
+        if(a[0][0]==1 || a[n-1][n-1]==1)return 0;
+        vector<vector<int>>dis(n,vector<int>(n,INT_MAX));
+        queue<pair<int,int>>q;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(a[i][j]==1)
+                {
+                    q.push({i,j});
+                    dis[i][j]=0;
+                }
+            }
+        }
+        
+        while(q.size()!=0)
+        {
+            auto f=q.front();
+            q.pop();
+            int r=f.first;
+            int c=f.second;
+            int dr[4]={-1,0,1,0};
+            int dc[4]={0,1,0,-1};
+            for(int i=0;i<4;i++)
+            {
+                int nr=r+dr[i];
+                int nc=c+dc[i];
+                if(nr>=0 && nr<n && nc>=0 && nc<n && dis[r][c]+1<dis[nr][nc])
+                {
+                    dis[nr][nc]=dis[r][c]+1;
+                    q.push({nr,nc});
+                }
+            }
+        }
+        // for(int i=0;i<n;i++)
+        // {
+        //     for(int j=0;j<n;j++)
+        //     {
+        //         cout<<dis[i][j]<<" ";
+        //     }
+        //     cout<<endl;
+        // }
+        vector<vector<int>>ans(n,vector<int>(n,INT_MIN));
+        ans[0][0]=dis[0][0];
+        priority_queue<pair<int,pair<int,int>>>pq;
+        pq.push({dis[0][0],{0,0}});
+        //cout<<endl;
+        while(pq.size()!=0)
+        {
+            auto f=pq.top();
+            pq.pop();
+            int d=f.first;
+            int r=f.second.first;
+            int c=f.second.second;
+            //cout<<d<<" "<<r<<" "<<c<<endl;
+            int dr[4]={-1,0,1,0};
+            int dc[4]={0,1,0,-1};
+            for(int i=0;i<4;i++)
+            {
+                int nr=r+dr[i];
+                int nc=c+dc[i];
+                if(nr>=0 && nr<n && nc>=0 && nc<n && min(d,dis[nr][nc])>ans[nr][nc])
+                {
+                    ans[nr][nc]=min(d,dis[nr][nc]);
+                    pq.push({ans[nr][nc], {nr, nc}});
+
+                }
+            }
+        }
+        // cout<<endl;
+        // for(int i=0;i<n;i++)
+        // {
+        //     for(int j=0;j<n;j++)
+        //     {
+        //         cout<<ans[i][j]<<" ";
+        //     }
+        //     cout<<endl;
+        // }
+        return ans[n-1][n-1];
+        
+        
+    }
+};
