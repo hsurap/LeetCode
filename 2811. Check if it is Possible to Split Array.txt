@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int func(vector<int>& a, int m,int i,int j,vector<int>&sum,vector<vector<int>>&dp)
+    {
+        if(i+1>=j)return true;
+        if(dp[i][j]!=-1)return dp[i][j];
+        bool ans=false;
+        for(int k=i;k<j;k++)
+        {
+            // (i-k)  (k+1 j)
+            if(k==i && sum[j]-sum[k]>=m)
+            {
+                ans=ans || func(a,m,k+1,j,sum,dp);
+            }
+            else if(k==j-1 )
+            {
+                int sum1=sum[k]-(i==0?0:sum[i-1]);
+                if(sum1>=m)
+                    ans= ans || func(a,m,i,k,sum,dp);
+            }
+            else{
+                int sum1=sum[k]-(i==0?0:sum[i-1]);
+                int sum2=sum[j]-sum[k];
+                if(sum1>=m && sum2>=m)
+                {
+                    ans= ans || (func(a,m,i,k,sum,dp) && func(a,m,k+1,j,sum,dp));
+                }
+            }
+        }
+        return dp[i][j]= ans;
+            
+        
+    }
+    bool canSplitArray(vector<int>& a, int m) {
+        if(a.size()==1)return true;
+        vector<int>sum(a.size(),a[0]);
+        for(int i=1;i<a.size();i++)
+        {
+            sum[i]=a[i]+sum[i-1];
+        }
+        vector<vector<int>>dp(a.size(),vector<int>(a.size(),-1));
+       return func(a,m,0,a.size()-1,sum,dp);
+        
+    }
+};
