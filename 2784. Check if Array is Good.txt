@@ -1,0 +1,16 @@
+class Solution {
+public:
+    bool isGood(vector<int>& a) 
+    {
+        unordered_map<int,int>map;
+        for(auto i:a)
+            map[i]++;
+        int n=a.size();
+        for(int i=1;i<=n-2;i++)
+        {
+            if(map[i]!=1)return false;
+        }
+        if(map[n-1]!=2)return false;
+        return true;
+    }
+};
