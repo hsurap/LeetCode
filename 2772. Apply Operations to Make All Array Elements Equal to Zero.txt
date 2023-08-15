@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool checkArray(vector<int>& a, int k) {
+        int n = a.size();
+        int s = 0;
+        deque<pair<int, int>> q;
+        int j = 0;
+
+        for (int i = 0; i < n; i++) {
+            while (!q.empty() && i - q.front().first >= k) {
+                s -= q.front().second;
+                q.pop_front();
+            }
+
+            if (a[i] < s) return false;
+
+            a[i] -= s;
+            if (a[i]) {
+                q.push_back({i, a[i]});
+                int v = a[i];
+                a[i] = 0;
+                s += v;
+            }
+        }
+
+        while (!q.empty() && n - q.front().first >= k) {
+            q.pop_front();
+        }
+
+        return *max_element(a.begin(), a.end()) == 0 && q.empty();
+    }
+};
