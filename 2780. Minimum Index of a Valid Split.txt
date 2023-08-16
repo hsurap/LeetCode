@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int minimumIndex(vector<int>& a) 
+    {
+        int cnt=1,ele=a[0];
+        for(int i=1;i<a.size();i++)
+        {
+            if(a[i]==ele)
+                cnt++;
+            else
+                cnt--;
+            if(cnt==0)
+            {
+                ele=a[i+1];
+                cnt=1;
+                i++;
+            }
+        }
+        int totalcount=0;
+        for(auto i:a)
+        {
+            if(i==ele)
+                totalcount++;
+        }
+        int nc=0;
+        for(int i=0;i<a.size();i++)
+        {
+            if(a[i]==ele)
+            {
+                nc++;
+            }
+            if((2*nc > (i+1))  && ((2*(totalcount-nc))>(a.size()-i-1)))
+                return i;
+        }
+        return -1;
+    }
+};
