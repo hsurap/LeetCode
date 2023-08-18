@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int func(string s,int i,unordered_map<string,bool>map,vector<int>&dp)
+    {
+        if(i>=s.size())return 0;
+        if(s[i]=='0')return 1e6;
+        if(dp[i]!=-1)return dp[i];
+        int ans=1e6;
+        string curr="";
+        for(int j=i;j<s.size();j++)
+        {
+            curr+=s[j];
+            if(map.count(curr))
+            {
+                int ca=func(s,j+1,map,dp)+1;
+                ans=min(ans,ca);
+            }
+            
+        }
+        return dp[i]= ans;
+    }
+    int minimumBeautifulSubstrings(string s) {
+        string poweroffive[] = {"1","101","11001", "1111101", "1001110001", "110000110101", "11110100001001","10011000100101101"};
+        vector<int>dp(s.size()+1,-1);
+        unordered_map<string,bool>map;
+        for(auto i:poweroffive)
+            map[i]=true;
+        int ans=func(s,0,map,dp);
+        if(ans>1000)return -1;
+        return ans;
+        
+    }
+};
