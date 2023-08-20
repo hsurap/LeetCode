@@ -1,0 +1,75 @@
+class Solution {
+public:
+    static bool cmp(pair<int,int>p1,pair<int,int>p2)
+    {
+        if(p1.first!=p2.first)
+            return p1.first<p2.first;
+        return p1.second<p2.second;
+    }
+    int func(vector<pair<int,int>>&v,int st,int en,int k)
+    {
+        if(st==en)return 1;
+        int len=1,used=0;
+        int i=st,j=st+1;
+        while(j<=en)
+        {
+            used+=(v[j].second-v[j-1].second-1);
+            if(used<=k)
+            {
+                int clen=j-i+1;
+                len=max(len,clen);
+                j++;
+            }
+            else{
+                while(i<j && used>k)
+                {
+                    int d=v[i+1].second-v[i].second-1;
+                    used-=d;
+                    i++;
+                }
+                int clen=j-i+1;
+                j++;
+                len=max(len,clen);
+            }
+        }
+        return len;
+    }
+    int longestEqualSubarray(vector<int>& a, int k) 
+    {
+        if(k==0)
+        {
+            int ans=1,l=1;
+            for(int i=1;i<a.size();i++)
+            {
+                if(a[i]==a[i-1])
+                    l++;
+                else{
+                    ans=max(l,ans);
+                    l=1;
+                }
+            }
+            ans=max(l,ans);
+            return ans;
+        }
+        vector<pair<int,int>>v;
+        for(int i=0;i<a.size();i++)
+        {
+            v.push_back({a[i],i});
+        }
+        sort(v.begin(),v.end(),cmp);
+        
+        int ans=1;
+        int i=0;
+        while(i<v.size())
+        {
+            int j=i;
+            while(j+1<v.size() && v[j].first==v[j+1].first)
+                j++;
+            int ca=func(v,i,j,k);
+            ans=max(ans,ca);
+            i=j+1;
+        }
+        return ans;
+        
+    }
+};
