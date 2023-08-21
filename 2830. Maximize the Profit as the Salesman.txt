@@ -1,0 +1,43 @@
+class Solution {
+public:
+    static bool cmp(vector<int>&v1,vector<int>&v2)
+    {
+        return v1[1]<v2[1];
+    }
+    int binarySearch(vector<vector<int>>& a, int index)
+    {
+        
+        int lo = 0, hi = index - 1,ans=-1;
+        while (lo <= hi)
+        {
+            int mid = (lo + hi) / 2;
+            if (a[mid][1] < a[index][0])
+            {
+                ans=mid;
+                lo=mid+1;
+            }
+            else
+                hi = mid - 1;
+        }
+
+        return ans;
+    }
+    int maximizeTheProfit(int n, vector<vector<int>>& a) {
+        
+        sort(a.begin(),a.end(),cmp);
+        int sz=a.size();
+        vector<int>v(sz,0);
+        v[0]=a[0][2];
+        for (int i=1; i<sz; i++)
+        {
+            int c1 = a[i][2];
+            int l = binarySearch(a, i);
+            if (l != -1)
+                c1 += v[l];
+
+            v[i] = max(c1, v[i-1]);
+        }
+        return v[a.size()-1];
+        
+    }
+};
