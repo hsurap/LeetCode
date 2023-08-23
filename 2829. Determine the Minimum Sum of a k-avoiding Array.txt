@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int minimumSum(int n, int k) {
+    int ans=0;
+    int l=1,r=k-1;
+    vector<int>v;
+    int no=k;
+    while(n>0)
+    {
+        if(l<=r)
+        {
+            v.push_back(l);
+            l++;
+            r--;
+            n--;
+        }
+        else
+            break;
+    }
+    l=no;
+    while(n--)
+        v.push_back(l++);
+    int s=0;
+    for(auto i:v)
+        s+=i;
+    return s;
+}
+
+};
