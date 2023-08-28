@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int maximumGap(vector<int>& a) {
+        int n = a.size();
+        if (n < 2) {
+            return 0;
+        }
+
+        int mini = *min_element(a.begin(), a.end());
+        int maxa = *max_element(a.begin(), a.end());
+
+        // If all elements are the same, the maximum gap is 0.
+        if (mini == maxa) {
+            return 0;
+        }
+
+        // Calculate the size of each bucket.
+        int bucketSize = max(1, (maxa - mini) / (n - 1));
+
+        // Calculate the number of buckets.
+        int numBuckets = (maxa - mini) / bucketSize + 1;
+
+        // Create and initialize the buckets.
+        vector<pair<int, int>> buckets(numBuckets, make_pair(INT_MAX, INT_MIN));
+
+        // Distribute the elements into the buckets.
+        for (int i = 0; i < n; i++) {
+            int bucketIndex = (a[i] - mini) / bucketSize;
+            buckets[bucketIndex].first = min(buckets[bucketIndex].first, a[i]);
+            buckets[bucketIndex].second = max(buckets[bucketIndex].second, a[i]);
+        }
+
+        // Calculate the maximum gap.
+        int maxGap = 0;
+        int previousMax = mini;
+
+        for (int i = 0; i < numBuckets; i++) {
+            // Skip empty buckets.
+            if (buckets[i].first == INT_MAX && buckets[i].second == INT_MIN) {
+                continue;
+            }
+
+            maxGap = max(maxGap, buckets[i].first - previousMax);
+            previousMax = buckets[i].second;
+        }
+
+        maxGap = max(maxGap, maxa - previousMax); // Consider the gap between the last maximum and the maximum element.
+
+        return maxGap;
+    }
+};
