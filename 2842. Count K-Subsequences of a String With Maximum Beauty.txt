@@ -1,0 +1,78 @@
+class Solution {
+public:
+    static bool cmp(int n1,int n2)
+    {
+        return n1>n2;
+    }
+    int nCrModM(int n, int r, int m) {
+        vector<vector<int>> dp(n + 1, vector<int>(r + 1, 0));
+
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= min(i, r); j++) {
+                if (j == 0 || j == i) {
+                    dp[i][j] = 1;
+                } else {
+                    dp[i][j] = (dp[i - 1][j - 1] + dp[i - 1][j]) % m;
+                }
+            }
+        }
+
+        return dp[n][r];
+    }
+    int countKSubsequencesWithMaxBeauty(string s, int k) {
+        vector<int>v(26,0);
+        for(int i=0;i<s.size();i++)
+        {
+            v[s[i]-'a']++;
+        }
+        
+        sort(v.begin(),v.end(),cmp);
+        map<int,int>mp;
+        for(int i=0;i<v.size();i++)
+        {
+            if(v[i]!=0)
+                mp[v[i]]++;
+        }
+        
+        vector<pair<int,int>>freq(mp.size());
+        int indx=freq.size()-1;
+        for(auto i:mp)
+        {
+            freq[indx]={i.first,i.second};
+            indx--;
+        }
+       //  for(auto i:freq)
+       //  {
+       //      cout<<i.first<<" "<<i.second<<endl;
+       //  }
+       // cout<<" ---";
+       //  return 0;
+        long long int ans=1;
+         long long int m=1e9+7;
+        indx=0;
+        while(k>0 && indx<freq.size())
+        {
+            pair<int,int>t=freq[indx];
+            //cout<<t.first<<" "<<t.second<<" "<<endl;
+            indx++;
+            if(t.second<=k)
+            {
+                k-=t.second;
+                for(int i=0;i<t.second;i++)
+                {
+                    ans=((ans%m)*(t.first%m))%m;
+                }
+            }
+            else{
+                ans=(ans%m * nCrModM(t.second,k,m)%m)%m;
+                for(int i=0;i<k;i++)
+                {
+                    ans=(ans%m*t.first%m)%m;
+                }
+                k=0;
+            }
+        }
+        if(k!=0)return 0;
+        return ans;
+    }
+};
