@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int furthestDistanceFromOrigin(string s) {
+        int c1=0,c2=0,c3=0;
+        for(auto i:s)
+        {
+            if(i=='L')c1++;
+            else if(i=='R')c2++;
+            else c3++;
+        }
+        
+        return c3+abs(c1-c2);
+        
+    }
+};
