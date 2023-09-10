@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int func(vector<int>& a,int i,int j,vector<int>&sum,vector<vector<int>>&dp)
+    {
+        if(i>j)return 0;
+        if(i==j)return 0;
+        if(dp[i][j]!=-1)return dp[i][j];
+        int ca1=(sum[j]-sum[i])-func(a,i+1,j,sum,dp);
+        int ca2=(sum[j-1]-(i==0?0:sum[i-1]))-func(a,i,j-1,sum,dp);
+        return dp[i][j]= max(ca1,ca2);
+    }
+    int stoneGameVII(vector<int>& a) {
+        vector<int>sum(a.size(),a[0]);
+        for(int i=1;i<a.size();i++)
+        {
+            sum[i]=sum[i-1]+a[i];
+        }
+        vector<vector<int>>dp(a.size(),vector<int>(a.size(),-1));
+        return func(a,0,a.size()-1,sum,dp);
+    }
+};
