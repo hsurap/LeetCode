@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int minAbsoluteDifference(vector<int>& a, int x) {
+        if (x == 0) return 0;
+        
+        set<int> st;
+        st.insert(INT_MIN);
+        st.insert(INT_MAX);
+        st.insert(a[0]);
+        
+        long long int ans = INT_MAX;
+        long long int j = 1;
+        
+        for (int i = x; i < a.size(); i++) {
+            auto lf = st.lower_bound(a[i]);
+            //cout<<*lf<<" ";
+            long long int dif = abs(a[i] - *lf);
+            ans = min(ans, dif);
+            //cout<<ans<<" ";
+            lf--; 
+            
+            if (lf != st.end()) {
+               // cout<<*lf<<" ";
+                if(*lf!=INT_MIN)
+                {
+                    long long int ca = abs(*lf - a[i]);  
+                ans = min(ans, ca);
+                }
+                
+            }
+            //cout<<ans<<" ";
+            st.insert(a[j]);
+            j++;
+        }
+        
+        return ans;
+    }
+};
