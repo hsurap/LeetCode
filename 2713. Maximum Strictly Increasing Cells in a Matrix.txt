@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int maxIncreasingCells(vector<vector<int>>& a) 
+    {
+        int n=a.size(),m=a[0].size();
+        vector<vector<int>>ans(n,vector<int>(m,0));
+        vector<int>row(n,0);
+        vector<int>col(m,0);
+        unordered_map<int,vector<pair<int,int>>>v;
+        set<int>st;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                int no=-1*a[i][j];
+                st.insert(no);
+                v[no].push_back({i,j});
+            }
+        }
+        
+        for(auto i:st)
+        {
+            for(auto p:v[i])
+            {
+                ans[p.first][p.second]=max(row[p.first],col[p.second])+1;
+            }
+            for(auto p:v[i])
+            {
+                row[p.first]=max(row[p.first],ans[p.first][p.second]);
+                col[p.second]=max(col[p.second],ans[p.first][p.second]);
+            }
+            
+        }
+        
+        int fans=0;
+        for(auto i:row)
+            fans=max(fans,i);
+        for(auto i:col)
+            fans=max(fans,i);
+        return fans;
+    }
+};
