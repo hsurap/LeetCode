@@ -1,0 +1,34 @@
+class Solution {
+public:
+    long long maxSum(vector<int>& a, int m, int k) {
+        long long ans=0;
+        long long csum=0;
+        unordered_map<int,int>map;
+        for(int i=0;i<a.size();i++)
+        {
+            if(i<k-1)
+            {
+                csum+=a[i];
+                map[a[i]]++;
+            }
+            else{
+                csum+=a[i];
+                map[a[i]]++;
+                if(map.size()>=m)
+                {
+                    ans=max(ans,csum);
+                }
+                // cout<<a[i-k+1]<<" "<<map[a[i-k+1]]<<" "<<endl;
+                csum-=a[i-k+1];
+                //cout<<csum<<" ";
+                map[a[i-k+1]]--;
+                //cout<<a[i-k+1]<<" "<<map[a[i-k+1]]<<" ";
+                if(map[a[i-k+1]]==0)
+                    map.erase(a[i-k+1]);
+                cout<<map.size()<<" ";
+            }
+        }
+        return ans;
+            
+    }
+};
