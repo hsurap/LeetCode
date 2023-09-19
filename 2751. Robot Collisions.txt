@@ -1,0 +1,60 @@
+class Solution {
+public:
+    static bool cmp(pair<int,pair<int,pair<int,char>>>p1,pair<int,pair<int,pair<int,char>>>p2)
+    {
+        return p1.second.first<p2.second.first;
+    }
+    vector<int> survivedRobotsHealths(vector<int>& p, vector<int>& h, string d) {
+        vector<pair<int,pair<int,pair<int,char>>>>v;
+        for(int i=0;i<p.size();i++)
+        {
+            v.push_back({p[i],{i,{h[i],d[i]}}});
+        }
+        sort(v.begin(),v.end());
+        stack<pair<int,pair<int,pair<int,char>>>>st;
+        st.push(v[0]);
+        int i=1;
+        while(i<v.size())
+        {
+            if(st.size()==0 || v[i].second.second.second=='R')
+                st.push(v[i++]);
+            else{
+                auto top=st.top();
+                if(top.second.second.second=='L')
+                    st.push(v[i++]);
+                else{
+                    if(top.second.second.first==v[i].second.second.first)
+                    {
+                        st.pop();
+                        i++;
+                    }
+                    else if(top.second.second.first<v[i].second.second.first){
+                        st.pop();
+                        v[i].second.second.first-=1;
+                    }
+                    else{
+                        st.pop();
+                        top.second.second.first-=1;
+                        st.push(top);
+                        i++;
+                        
+                    }
+                }
+            }
+        }
+        vector<pair<int,pair<int,pair<int,char>>>>nv;
+        while(st.size()!=0)
+        {
+            auto t=st.top();
+            st.pop();
+            nv.push_back(t);
+        }
+        sort(nv.begin(),nv.end(),cmp);
+        vector<int>ans;
+        for(auto i:nv)
+        {
+            ans.push_back(i.second.second.first);
+        }
+        return ans;
+    }
+};
