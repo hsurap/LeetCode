@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool checkStrings(string s1, string s2) {
+        unordered_map<char,int>map1;
+        unordered_map<char,int>map2;
+        for(int i=0;i<s1.size();i++)
+        {
+            if(i%2==0)
+            {
+                map1[s1[i]]++;
+                map1[s2[i]]--;
+            }
+            else{
+                map2[s1[i]]++;
+                map2[s2[i]]--;
+            }
+        }
+        for(auto i:map1)
+        {
+            if(i.second!=0)return false;
+        }
+        for(auto i:map2)
+        {
+            if(i.second!=0)return false;
+        }
+        return true;
+    }
+};
