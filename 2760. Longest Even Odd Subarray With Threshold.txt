@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int longestAlternatingSubarray(vector<int>& a, int t) 
+    {
+        int ans=0;
+        for(int i=0;i<a.size();i++)
+        {
+            int ca=0;
+            if(a[i]%2==0 && a[i]<=t)
+                ca=1;
+            else
+                continue;
+            bool odd=true;
+            for(int j=i+1;j<a.size();j++)
+            {
+                if(a[j]>t)break;
+                if(odd && a[j]%2==0)break;
+                if(!odd && a[j]%2==1)break;
+                if(odd)
+                {
+                    if(a[j]%2==1 && a[j]<=t)
+                        ca++;
+                    odd=false;
+                }
+                else if(odd==false)
+                {
+                    if(a[j]%2==0 && a[j]<=t)
+                        ca++;
+                    odd=true;
+                }
+                else
+                    break;
+            }
+            ans=max(ans,ca);
+        }
+        return ans;
+    }
+};
