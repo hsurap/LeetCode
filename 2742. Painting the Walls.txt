@@ -1,0 +1,36 @@
+/* Approach : Recursion + Memo 
+1. For each wall, we have 2 options :
+    a) paint by paid painter
+    b) paint by free painter (consider as not paint by paid painter)
+2. Try all options and memoize for repeated subproblems
+3. If we choose ith wall to be painted by paid painter, 
+   free painter can paint time[i] walls in that time.
+Time : O(n^2)       // n * (n+1) dp states
+Space : O(n^2)
+*/
+class Solution {
+public:
+    const int highValue = 1000000001;
+    int f(int index, int wallRemain, vector<vector<int>>& dp, vector<int>& cost, vector<int>& time){
+        // all painted, no additional cost
+        if(wallRemain <= 0)  return 0;
+        // index out of bound, return a high value for comparision
+        if(index == cost.size()) return highValue;
+        // already computed
+        if(dp[index][wallRemain] != -1)
+            return dp[index][wallRemain];
+        // pick not pick approach
+        // pick - paint this wall by paid painter, free painter will paint time[index] walls in this time
+        int pick = cost[index] + f(index+1, wallRemain - time[index] - 1, dp, cost, time);
+        // not pick - do not paint this wall by paid painter
+        int notPick = f(index+1, wallRemain, dp, cost, time);
+
+        return dp[index][wallRemain] = min(pick, notPick);
+    }
+
+    int paintWalls(vector<int>& cost, vector<int>& time) {
+        int n = cost.size();
+        vector<vector<int>> dp(n, vector<int>(n+1,-1));
+        return f(0, cost.size(), dp, cost, time);
+    }
+};
