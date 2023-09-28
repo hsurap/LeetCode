@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int countBeautifulPairs(vector<int>& a) 
+    {
+        int cnt=0;
+        for(int i=0;i<a.size()-1;i++)
+        {
+            for(int j=i+1;j<a.size();j++)
+            {
+                string no1=to_string(a[i]);
+                string no2=to_string(a[j]);
+                int n1=no1[0]-'0';
+                int n2=no2[no2.size()-1]-'0';
+                if(__gcd(n1,n2)==1)
+                {
+                    //cout<<a[i]<<" "<<a[j]<<" "<<__gcd(a[i],a[j])<<endl;
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+        
+    }
+};
