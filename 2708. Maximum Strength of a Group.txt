@@ -1,0 +1,39 @@
+class Solution {
+public:
+    long long maxStrength(vector<int>& a) 
+    {
+        vector<long long int>pos;
+        vector< long long int>neg;
+        long long int ans=1;
+        bool chk=false;
+        bool zero=false;
+        for(auto i:a)
+        {
+            if(i>0)
+            {
+                ans=ans*i;
+                chk=true;
+            }
+            else if(i<0)
+                neg.push_back(i);
+            else if(i==0)
+                zero=true;
+        }
+        if(chk==false && neg.size()==1 && zero==false)return neg[0];
+        else if(chk==false && zero && neg.size()==1)return 0;
+        else if(chk==false && zero && neg.size()==0)return 0;
+        sort(neg.begin(),neg.end());
+        if(neg.size()%2==0)
+        {
+            for(auto i:neg)
+                ans*=i;
+        }
+        else{
+            for(int i=0;i<neg.size()-1;i++)
+            {
+                ans*=neg[i];
+            }
+        }
+        return ans;
+    }
+};
