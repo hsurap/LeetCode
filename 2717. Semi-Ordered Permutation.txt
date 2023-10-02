@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int semiOrderedPermutation(vector<int>& a) 
+    {
+        bool chk=false;
+        int ind1=-1,ind2=-1;
+        for(int i=0;i<a.size();i++)
+        {
+            if(a[i]==a.size())
+            {
+                chk=true;
+                ind2=i;
+            }
+            else if(a[i]==1)
+            {
+                ind1=i;
+                 break;
+            }
+        }
+        int ans=0;
+       // cout<<ind1<<" "<<ind2<<endl;
+        ans+=ind1;
+        if(chk)
+        {
+            ans+=(a.size()-ind2-2);
+            return ans;
+        }
+        else{
+            for(int i=0;i<a.size();i++)
+            {
+                if(a[i]==a.size())
+                {
+                    ans+=(a.size()-i-1);
+                    break;
+                }
+            }
+        }
+        return ans;
+    }
+};
