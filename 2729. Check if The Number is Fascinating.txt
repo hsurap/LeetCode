@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool isFascinating(int n) 
+    {
+        int a=2*n;
+        int b=3*n;
+        string p=to_string(a)+to_string(b);
+        string s=to_string(n)+p;
+        unordered_map<int,int>map;
+        for(auto i:s)
+            map[i]++;
+        if(map['0']>0)return false;
+        for(char ch='1';ch<='9';ch++)
+        {
+            if(map[ch]!=1)return false;
+        }
+        return true;
+    }
+};
