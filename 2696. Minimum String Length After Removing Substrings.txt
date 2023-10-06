@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int minLength(string s) 
+    {
+        
+        while(true)
+        {
+            bool chk=false;
+            string ns="";
+            int i=0;
+            while(i<s.size()-1)
+            {
+                if((s[i]=='A' && s[i+1]=='B') || (s[i]=='C' && s[i+1]=='D'))
+                {
+                    chk=true;
+                    i+=2;
+                }
+                else{
+                    ns+=s[i];
+                    i++;
+                }
+            }
+            if(i<s.size())
+                ns+=s[i];
+            s=ns;
+            if(chk==false || s.size()==0)break;
+        }
+        return s.size();
+    }
+};
