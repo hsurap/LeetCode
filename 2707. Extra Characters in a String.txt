@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int func(string s,int ind,unordered_map<string,bool>&map,vector<int>&dp)
+    {
+        if(ind==s.size())return 0;
+        if(dp[ind]!=-1)return dp[ind];
+        int cnt=0;
+        int fa=INT_MAX;
+        for(int i=ind;i<s.size();i++)
+        {
+            int sa=cnt;
+            string sm="";
+            int ca=s.size()-i;
+            for(int j=i;j<s.size();j++)
+            {
+                sm+=s[j];
+                if(map.count(sm))
+                    ca=min(ca,func(s,j+1,map,dp));
+            }
+            fa=min(fa,sa+ca);
+            cnt++;
+        }
+        return dp[ind]= fa;
+    }
+    int minExtraChar(string s, vector<string>& dic) {
+        vector<int>dp(s.size()+1,-1);
+        unordered_map<string,bool>map;
+        for(auto i:dic)
+            map[i]=true;
+        return func(s,0,map,dp);
+        
+    }
+};
