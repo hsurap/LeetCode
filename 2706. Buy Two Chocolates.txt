@@ -1,0 +1,8 @@
+class Solution {
+public:
+    int buyChoco(vector<int>& a, int m) {
+        sort(a.begin(),a.end());
+        if(a[0]+a[1]<=m)return m-a[0]-a[1];
+        else return m;
+    }
+};
